@@ -21,6 +21,7 @@
     "eject": "react-scripts eject",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix"
   },
+ "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },
