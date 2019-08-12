@@ -1,35 +1,33 @@
-@mixin center{
-    text-align:center;
+@mixin center {
+  text-align: center;
 }
 
-.input-container{
-    margin: 0 40px 6px;
+.input-container {
+  margin: 0 40px 6px;
 }
 
-.form-container{
-    @include center;
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
-    border-radius: 1px;
-    padding: 10px 0;
-    margin: 12px auto 0px;
-    max-width: 350px;
-    width: 100%;
-    color: #262626;
+.form-container {
+  @include center;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 1px;
+  padding: 10px 0;
+  margin: 12px auto 0px;
+  max-width: 350px;
+  width: 100%;
+  color: #262626;
 
-    input{
-        width: 250px;
-        height: 36px;
-        border-radius: 4px;
-    }
+  input {
+    width: 250px;
+    height: 36px;
+    border-radius: 4px;
+  }
 
-    input[type="submit"]{
-        border: 1px solid #3897f0;
-        background-color: #3897f0;
-        color: #fff;
-        cursor: pointer;
-        height: 30px;
-    }
-
-    
+  input[type="submit"] {
+    border: 1px solid #3897f0;
+    background-color: #3897f0;
+    color: #fff;
+    cursor: pointer;
+    height: 30px;
+  }
 }
