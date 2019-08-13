@@ -1,0 +1,78 @@
+@mixin center {
+  text-align: center;
+}
+
+.submit-container,
+.input-container {
+  margin: 0.5rem auto;
+  height: 1.5rem;
+}
+
+.sign-up-top-paragraph-container,
+.sign-up-bottom-paragraph-container {
+  width: 15rem;
+  margin: auto;
+  color: #999;
+  @include center;
+  line-height: 1.25rem;
+}
+
+.sign-up-bottom-paragraph-container {
+  span {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+.sign-up-top-paragraph-container {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.input-container {
+  width: 15rem;
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.2rem;
+  margin-bottom: 0.4rem;
+  border: 0.06rem solid #e6e6e6;
+  background-color: #fafafa;
+  &:focus {
+    border-color: #262626;
+  }
+}
+
+.submit-container {
+  margin: 1.5rem auto 3rem;
+  width: 15.5rem;
+}
+
+.form-container {
+  @include center;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 1px;
+  padding: 10px 0;
+  margin: 12px auto 0px;
+  max-width: 350px;
+  width: 100%;
+  color: #262626;
+
+  input {
+    width: 95%;
+    padding: 0.5rem 0.2;
+    outline: 0;
+    border: none;
+    background-color: #fafafa;
+  }
+
+  .submit-button {
+    background-color: #3897f0;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.3rem 0.2rem;
+    font-size: 1rem;
+    border: 1px solid #3897f0;
+    border-radius: 0.25rem;
+  }
+}
