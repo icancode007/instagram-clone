@@ -31,6 +31,10 @@ export default class Counter extends React.Component {
             </form>
           </div>
         </div>
+        {/* log in footer */}
+        <div className="form-container">
+          <p>Don't have an account? <button className="lg-footer-sign-up-btn">Sign up</button></p>
+        </div>
         {/*  Sign up */}
         <div className="form-container">
           <h1>Instagram</h1>
