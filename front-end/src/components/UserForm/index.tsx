@@ -1,70 +1,33 @@
 import * as React from 'react';
 import './style.scss';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
-export default class Counter extends React.Component {
+interface State {
+  isSigningIn: boolean,
+}
+
+export default class Counter extends React.Component<Object, State> {
   //could be refactored to functional component if hooks will be used
-  componentDidMount() {
+  state = {
+    isSigningIn: false
+  }
+
+  componentDidMount(): void {
     fetch('/root')
       .then(res => res.json())
       .then(data => console.log(data));
   }
 
-  render() {
-    // Rendering both forms for now. 
-    // We can also create them in two different files and render them here. 
-    return (
-      <div>
-        {/* Log In */}
-        <div className="form-container">
-          <h1>Instagram</h1>
-          <div>
-            <form>
-              <div className="input-container">
-                <input type="text" placeholder="Phone number, username, or email" />
-              </div>
-              <div className="input-container">
-                <input type="password" placeholder="Password" />
-              </div>
-              <div className="submit-container">
-                <input type="submit" className="submit-button" value="Log In" />
-              </div>
-            </form>
-          </div>
-        </div>
-        {/* log in footer */}
-        <div className="form-container">
-          <p>Don't have an account? <button className="lg-footer-sign-up-btn">Sign up</button></p>
-        </div>
-        {/*  Sign up */}
-        <div className="form-container">
-          <h1>Instagram</h1>
-          <div className="sign-up-top-paragraph-container">
-            <p>Sign up to see photos and videos from your friends.</p>
-          </div>
-          <div>
-            <form>
-              <div className="input-container">
-                <input type="text" placeholder="Mobile number or email" />
-              </div>
-              <div className="input-container">
-                <input type="text" placeholder="Full Name" />
-              </div>
-              <div className="input-container">
-                <input type="text" placeholder="Username" />
-              </div>
-              <div className="input-container">
-                <input type="password" placeholder="Password" />
-              </div>
-              <div className="submit-container">
-                <input type="submit" className="submit-button" value="Sign Up" />
-              </div>
-              <div className="sign-up-bottom-paragraph-container">
-                <p>By signing up, you agree to our <span>Terms</span> , <span>Data Policy</span> and <span>Cookies Policy</span>.</p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
+  toggleUserForm = (origin: string): void => {
+    origin === 'signUp'
+      ? this.setState({ isSigningIn: true })
+      : this.setState({ isSigningIn: false })
+
+  }
+
+  render(): JSX.Element {
+    const { isSigningIn } = this.state;
+    return isSigningIn ? <SignIn toggleUserForm={this.toggleUserForm} /> : <SignUp toggleUserForm={this.toggleUserForm} />
   }
 }
