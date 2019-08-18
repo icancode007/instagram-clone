@@ -30,6 +30,8 @@
 }
 
 .input-container {
+  display: flex;
+  align-items: center;
   width: 15rem;
   border-radius: 0.25rem;
   padding: 0.3rem 0.2rem;
@@ -75,9 +77,18 @@
     border: 1px solid #3897f0;
     border-radius: 0.25rem;
   }
+
+  .error-container {
+    color: #ee2d3e;
+  }
+  
+  .error-image {
+    width: 41px;
+    height: 32px;
+  }
 }
 
-.lg-footer-sign-up-btn{
+.lg-footer-sign-up-btn {
   background-color: #fff;
   color: #3897f0;
   font-weight: 600;
