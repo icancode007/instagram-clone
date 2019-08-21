@@ -1,7 +1,7 @@
 import React from 'react';
 import errorImg from './assets/error.png';
-// TODO: move the state to the parent component.
-interface UserForm {
+
+export interface UserForm {
   toggleUserForm: any
 }
 
@@ -14,7 +14,6 @@ class SignUp extends React.Component<UserForm, State>{
   state = {
     errors: [''],
     numberOfErrors: 0
-
   }
 
   submit = (e: any): void => {
@@ -95,7 +94,6 @@ class SignUp extends React.Component<UserForm, State>{
               <div className="error-container">
                 {
                   this.displayErrorMessage()
-
                 }
               </div>
               <div className="sign-up-bottom-paragraph-container">

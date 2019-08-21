@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+@mixin submit-button-mixin {
+  @content;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.3rem 0.2rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
 .submit-container,
 .input-container {
   margin: 0.5rem auto;
@@ -68,20 +77,23 @@
   }
 
   .submit-button {
-    background-color: #3897f0;
-    color: #fff;
-    cursor: pointer;
-    width: 100%;
-    padding: 0.3rem 0.2rem;
-    font-size: 1rem;
-    border: 1px solid #3897f0;
-    border-radius: 0.25rem;
+    @include submit-button-mixin {
+      background-color: #3897f0;
+      border: 1px solid #3897f0;
+    }
+  }
+
+  .submit-button-disable {
+    @include submit-button-mixin {
+      background-color: #c3dffa;
+      border: 1px solid #c3dffa;
+    }
   }
 
   .error-container {
     color: #ee2d3e;
   }
-  
+
   .error-image {
     width: 41px;
     height: 32px;

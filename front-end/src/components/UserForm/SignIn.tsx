@@ -4,7 +4,21 @@ interface UserForm {
     toggleUserForm: any
 }
 
-class SignIn extends React.Component<UserForm>{
+interface State {
+    isSubmitButtonEnable: boolean,
+    username: string,
+}
+
+class SignIn extends React.Component<UserForm, State>{
+
+    state = {
+        isSubmitButtonEnable: false,
+        username: ""
+    }
+
+    handleUserNameChange = (e: { target: { value: string; }; }) => {
+        this.setState({ username: e.target.value })
+    }
 
     submit = (e: React.FormEvent): void => {
         e.preventDefault();
@@ -12,6 +26,8 @@ class SignIn extends React.Component<UserForm>{
 
     render() {
         const { toggleUserForm } = this.props;
+        const { username } = this.state;
+
         return (
             <div>
                 <div className="form-container">
@@ -19,13 +35,13 @@ class SignIn extends React.Component<UserForm>{
                     <div>
                         <form onSubmit={this.submit}>
                             <div className="input-container">
-                                <input type="text" placeholder="Phone number, username, or email" />
+                                <input type="text" placeholder="Phone number, username, or email" onChange={this.handleUserNameChange} value={username} />
                             </div>
                             <div className="input-container">
                                 <input type="password" placeholder="Password" />
                             </div>
                             <div className="submit-container">
-                                <input type="submit" className="submit-button" value="Log In" />
+                                <input type="submit" className={username ? "submit-button" : "submit-button-disable"} value="Log In" />
                             </div>
                         </form>
                     </div>
@@ -38,4 +54,3 @@ class SignIn extends React.Component<UserForm>{
 }
 
 export default SignIn;
-
