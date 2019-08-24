@@ -1,3 +1,4 @@
+// Shared by Sign In and Sign Up
 @mixin center {
   text-align: center;
 }
@@ -15,27 +16,6 @@
 .input-container {
   margin: 0.5rem auto;
   height: 1.5rem;
-}
-
-.sign-up-top-paragraph-container,
-.sign-up-bottom-paragraph-container {
-  width: 15rem;
-  margin: auto;
-  color: #999;
-  @include center;
-  line-height: 1.25rem;
-}
-
-.sign-up-bottom-paragraph-container {
-  span {
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-}
-
-.sign-up-top-paragraph-container {
-  font-size: 1.1rem;
-  font-weight: 600;
 }
 
 .input-container {
@@ -100,6 +80,22 @@
   }
 }
 
+// Sign In
+.show-hide-btn{
+  font-weight: bold;
+  cursor: pointer;
+}
+
+// Sign Up
+.sign-up-top-paragraph-container,
+.sign-up-bottom-paragraph-container {
+  width: 15rem;
+  margin: auto;
+  color: #999;
+  @include center;
+  line-height: 1.25rem;
+}
+
 .lg-footer-sign-up-btn {
   background-color: #fff;
   color: #3897f0;
@@ -108,7 +104,14 @@
   cursor: pointer;
 }
 
-.show-hide-btn{
-  font-weight: bold;
-  cursor: pointer;
+.sign-up-bottom-paragraph-container {
+  span {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+.sign-up-top-paragraph-container {
+  font-size: 1.1rem;
+  font-weight: 600;
 }
