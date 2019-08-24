@@ -21,12 +21,12 @@ class SignIn extends React.Component<UserForm, State>{
         isError: false
     }
 
-    handleUserNameChange = (e: { target: { value: string; }; }): void => {
-        this.setState({ username: e.target.value })
+    handleUserNameChange = (event: { target: { value: string; }; }): void => {
+        this.setState({ username: event.target.value })
     }
 
-    submit = (e: React.FormEvent): void => {
-        e.preventDefault();
+    submit = (event: React.FormEvent): void => {
+        event.preventDefault();
         const passwordInput: any = document.getElementById("passwordInput");
 
         if (passwordInput.value) {

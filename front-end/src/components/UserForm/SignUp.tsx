@@ -16,8 +16,8 @@ class SignUp extends React.Component<UserForm, State>{
     numberOfErrors: 0
   }
 
-  submit = (e: any): void => {
-    e.preventDefault();
+  submit = (event: any): void => {
+    event.preventDefault();
     let inputChildren = document.querySelectorAll('.sign-up-input');
     let errors: string[] = [];
 
