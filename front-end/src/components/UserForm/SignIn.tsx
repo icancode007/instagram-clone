@@ -13,7 +13,6 @@ interface State {
 }
 
 class SignIn extends React.Component<UserForm, State>{
-
     state = {
         isSubmitButtonEnable: false,
         username: "",
@@ -28,7 +27,6 @@ class SignIn extends React.Component<UserForm, State>{
 
     submit = (e: React.FormEvent): void => {
         e.preventDefault();
-
         const passwordInput: any = document.getElementById("passwordInput");
 
         if (passwordInput.value) {
@@ -44,11 +42,9 @@ class SignIn extends React.Component<UserForm, State>{
         } else {
             this.setState({ showBtnInPasswordInput: false })
         }
-
     }
 
     togglePassword = () => {
-
         const passwordInput: any = document.getElementById("passwordInput");
 
         if (passwordInput.type === "password") {
@@ -58,7 +54,6 @@ class SignIn extends React.Component<UserForm, State>{
             this.setState({ isShowingPassword: false });
             passwordInput.type = 'password';
         }
-
     }
 
     render() {
@@ -85,11 +80,10 @@ class SignIn extends React.Component<UserForm, State>{
                                 }
                             </div>
                             {
-                                isError 
-                                ? <div className="error-container"> <span>password is required</span></div>
-                                : null
+                             isError
+                               ? <div className="error-container"> <span>password is required</span></div>
+                               : null
                             }
-
                         </form>
                     </div>
                 </div>

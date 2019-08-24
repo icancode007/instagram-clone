@@ -23,7 +23,6 @@ export default class Counter extends React.Component<Object, State> {
     origin === 'signUp'
       ? this.setState({ isSigningIn: true })
       : this.setState({ isSigningIn: false })
-
   }
 
   render(): JSX.Element {
