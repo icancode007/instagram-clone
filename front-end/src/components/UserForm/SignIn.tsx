@@ -7,16 +7,20 @@ interface UserForm {
 interface State {
     isSubmitButtonEnable: boolean,
     username: string,
+    showBtnInPasswordInput: boolean,
+    isShowingPassword: boolean,
 }
 
 class SignIn extends React.Component<UserForm, State>{
 
     state = {
         isSubmitButtonEnable: false,
-        username: ""
+        username: "",
+        showBtnInPasswordInput: false,
+        isShowingPassword: false
     }
 
-    handleUserNameChange = (e: { target: { value: string; }; }) => {
+    handleUserNameChange = (e: { target: { value: string; }; }): void => {
         this.setState({ username: e.target.value })
     }
 
@@ -24,9 +28,32 @@ class SignIn extends React.Component<UserForm, State>{
         e.preventDefault();
     }
 
+    handlePasswordChange = (event: { target: { value: string } }): void => {
+        if (event.target.value) {
+            this.setState({ showBtnInPasswordInput: true })
+        } else {
+            this.setState({ showBtnInPasswordInput: false })
+        }
+
+    }
+
+    togglePassword = () => {
+
+        const passwordInput: any = document.getElementById("passwordInput");
+
+        if (passwordInput.type === "password") {
+            this.setState({ isShowingPassword: true });
+            passwordInput.type = 'text';
+        } else {
+            this.setState({ isShowingPassword: false });
+            passwordInput.type = 'password';
+        }
+
+    }
+
     render() {
         const { toggleUserForm } = this.props;
-        const { username } = this.state;
+        const { username, isShowingPassword, showBtnInPasswordInput } = this.state;
 
         return (
             <div>
@@ -38,7 +65,8 @@ class SignIn extends React.Component<UserForm, State>{
                                 <input type="text" placeholder="Phone number, username, or email" onChange={this.handleUserNameChange} value={username} />
                             </div>
                             <div className="input-container">
-                                <input type="password" placeholder="Password" />
+                                <input id="passwordInput" type="password" placeholder="Password" onChange={this.handlePasswordChange} />
+                                {showBtnInPasswordInput ? <span className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</span> : null}
                             </div>
                             <div className="submit-container">
                                 <input type="submit" className={username ? "submit-button" : "submit-button-disable"} value="Log In" />
