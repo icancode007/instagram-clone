@@ -9,6 +9,7 @@ interface State {
     username: string,
     showBtnInPasswordInput: boolean,
     isShowingPassword: boolean,
+    isError: boolean
 }
 
 class SignIn extends React.Component<UserForm, State>{
@@ -17,7 +18,8 @@ class SignIn extends React.Component<UserForm, State>{
         isSubmitButtonEnable: false,
         username: "",
         showBtnInPasswordInput: false,
-        isShowingPassword: false
+        isShowingPassword: false,
+        isError: false
     }
 
     handleUserNameChange = (e: { target: { value: string; }; }): void => {
@@ -26,6 +28,14 @@ class SignIn extends React.Component<UserForm, State>{
 
     submit = (e: React.FormEvent): void => {
         e.preventDefault();
+
+        const passwordInput: any = document.getElementById("passwordInput");
+
+        if (passwordInput.value) {
+            // do sign in request
+        } else {
+            this.setState({ isError: true })
+        }
     }
 
     handlePasswordChange = (event: { target: { value: string } }): void => {
@@ -53,7 +63,7 @@ class SignIn extends React.Component<UserForm, State>{
 
     render() {
         const { toggleUserForm } = this.props;
-        const { username, isShowingPassword, showBtnInPasswordInput } = this.state;
+        const { username, isShowingPassword, showBtnInPasswordInput, isError } = this.state;
 
         return (
             <div>
@@ -69,8 +79,17 @@ class SignIn extends React.Component<UserForm, State>{
                                 {showBtnInPasswordInput ? <span className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</span> : null}
                             </div>
                             <div className="submit-container">
-                                <input type="submit" className={username ? "submit-button" : "submit-button-disable"} value="Log In" />
+                                {username
+                                    ? <input type="submit" className="submit-button" value="Log In" />
+                                    : <input type="submit" className="submit-button-disable" value="Log In" disabled />
+                                }
                             </div>
+                            {
+                                isError 
+                                ? <div className="error-container"> <span>password is required</span></div>
+                                : null
+                            }
+
                         </form>
                     </div>
                 </div>
