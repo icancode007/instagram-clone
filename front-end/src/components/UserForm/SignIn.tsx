@@ -71,7 +71,7 @@ class SignIn extends React.Component<UserForm, State>{
                             </div>
                             <div className="input-container">
                                 <input id="passwordInput" type="password" placeholder="Password" onChange={this.handlePasswordChange} />
-                                {showBtnInPasswordInput ? <span className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</span> : null}
+                                {showBtnInPasswordInput ? <button className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</button> : null}
                             </div>
                             <div className="submit-container">
                                 {username
