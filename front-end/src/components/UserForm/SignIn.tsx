@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface UserForm {
+export interface UserForm {
     toggleUserForm: any
 }
 
-interface State {
+export interface State {
     isSubmitButtonEnable: boolean,
     username: string,
     showBtnInPasswordInput: boolean,
@@ -80,9 +80,9 @@ class SignIn extends React.Component<UserForm, State>{
                                 }
                             </div>
                             {
-                             isError
-                               ? <div className="error-container"> <span>password is required</span></div>
-                               : null
+                                isError
+                                    ? <div className="error-container"> <span>password is required</span></div>
+                                    : null
                             }
                         </form>
                     </div>
