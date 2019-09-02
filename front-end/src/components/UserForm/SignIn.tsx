@@ -1,24 +1,21 @@
 import React from 'react';
-
-export interface UserForm {
-    toggleUserForm: any
-}
+import { UserFormProps } from './index';
 
 export interface State {
     isSubmitButtonEnable: boolean,
     username: string,
     showBtnInPasswordInput: boolean,
     isShowingPassword: boolean,
-    isError: boolean
+    error: string
 }
 
-class SignIn extends React.Component<UserForm, State>{
+class SignIn extends React.Component<UserFormProps, State>{
     state = {
         isSubmitButtonEnable: false,
         username: "",
         showBtnInPasswordInput: false,
         isShowingPassword: false,
-        isError: false
+        error: ""
     }
 
     handleUserNameChange = (event: { target: { value: string; }; }): void => {
@@ -27,12 +24,25 @@ class SignIn extends React.Component<UserForm, State>{
 
     submit = (event: React.FormEvent): void => {
         event.preventDefault();
-        const passwordInput: any = document.getElementById("passwordInput");
+        const phoneNumberOrEmail: any = document.getElementById('email-phone-username');
+        const passwordInput: any = document.getElementById("password");
 
-        if (passwordInput.value) {
-            // do sign in request
+        const isValidPhoneNumber = this.props.isValidPhoneNumber(phoneNumberOrEmail.value);
+        const isValidEmail = this.props.isValidEmail(phoneNumberOrEmail.value);
+        const isValidUserName = this.props.isValidUserName(phoneNumberOrEmail.value);
+        const isValidInput = isValidEmail || isValidPhoneNumber || isValidUserName;
+        const isValidPassword = this.props.isValidPassword(passwordInput.value);
+
+        if (isValidInput && isValidPassword) {
+            // TODO: make logging request
         } else {
-            this.setState({ isError: true })
+            // checks where is the error
+            if (isValidInput) {
+                // Then the password is invalid
+                this.setState({ error: "password" })
+            } else {
+                this.setState({ error: "username" })
+            }
         }
     }
 
@@ -45,7 +55,7 @@ class SignIn extends React.Component<UserForm, State>{
     }
 
     togglePassword = () => {
-        const passwordInput: any = document.getElementById("passwordInput");
+        const passwordInput: any = document.getElementById("password");
 
         if (passwordInput.type === "password") {
             this.setState({ isShowingPassword: true });
@@ -58,7 +68,14 @@ class SignIn extends React.Component<UserForm, State>{
 
     render() {
         const { toggleUserForm } = this.props;
-        const { username, isShowingPassword, showBtnInPasswordInput, isError } = this.state;
+        const { username, isShowingPassword, showBtnInPasswordInput, error } = this.state;
+        let errorMessage;
+
+        if (error === "username") {
+            errorMessage = <div className="error-container"><span>The username you entered doesn't belong to an account.</span></div>;
+        } else if (error === "password") {
+            errorMessage = <div className="error-container"><span>Sorry, your password was incorrect.</span></div>;
+        }
 
         return (
             <div>
@@ -67,10 +84,10 @@ class SignIn extends React.Component<UserForm, State>{
                     <div>
                         <form onSubmit={this.submit}>
                             <div className="input-container">
-                                <input type="text" placeholder="Phone number, username, or email" onChange={this.handleUserNameChange} value={username} />
+                                <input id="email-phone-username" type="text" placeholder="Phone number, username, or email" onChange={this.handleUserNameChange} value={username} />
                             </div>
                             <div className="input-container">
-                                <input id="passwordInput" type="password" placeholder="Password" onChange={this.handlePasswordChange} />
+                                <input id="password" type="password" placeholder="Password" onChange={this.handlePasswordChange} />
                                 {showBtnInPasswordInput ? <button className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</button> : null}
                             </div>
                             <div className="submit-container">
@@ -79,11 +96,7 @@ class SignIn extends React.Component<UserForm, State>{
                                     : <input type="submit" className="submit-button-disable" value="Log In" disabled />
                                 }
                             </div>
-                            {
-                                isError
-                                    ? <div className="error-container"> <span>password is required</span></div>
-                                    : null
-                            }
+                            {errorMessage}
                         </form>
                     </div>
                 </div>
