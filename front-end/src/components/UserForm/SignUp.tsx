@@ -124,7 +124,7 @@ class SignUp extends React.Component<UserFormProps, State>{
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     return (
       <div>
-        <div className="form-container">
+        <div className="form-container sign-up">
           <h1>Instagram</h1>
           <div className="sign-up-top-paragraph-container">
             <p>Sign up to see photos and videos from your friends.</p>
@@ -163,7 +163,7 @@ class SignUp extends React.Component<UserFormProps, State>{
           </div>
         </div>
         <div className="form-container">
-          <p>Have an account? <button onClick={() => toggleUserForm('signUp')} className="lg-footer-sign-up-btn">Log In</button></p>
+          <p>Have an account? <button onClick={() => toggleUserForm('signUp')} className="footer-btn">Log In</button></p>
         </div>
       </div>
     );

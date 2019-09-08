@@ -78,43 +78,47 @@
     width: 41px;
     height: 32px;
   }
-}
 
-// Sign In
-.show-hide-btn {
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  background-color: #fafafa;
-  outline: 0;
-}
-
-// Sign Up
-.sign-up-top-paragraph-container,
-.sign-up-bottom-paragraph-container {
-  width: 15rem;
-  margin: auto;
-  color: #999;
-  @include center;
-  line-height: 1.25rem;
-}
-
-.lg-footer-sign-up-btn {
-  background-color: #fff;
-  color: #3897f0;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-}
-
-.sign-up-bottom-paragraph-container {
-  span {
-    font-size: 0.95rem;
+  .footer-btn {
+    background-color: #fff;
+    color: #3897f0;
     font-weight: 600;
+    border: none;
+    cursor: pointer;
   }
 }
 
-.sign-up-top-paragraph-container {
-  font-size: 1.1rem;
-  font-weight: 600;
+// Sign In
+.sign-in {
+  .show-hide-btn {
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: #fafafa;
+    outline: 0;
+  }
+}
+
+// Sign Up
+.sign-up {
+  .sign-up-top-paragraph-container,
+  .sign-up-bottom-paragraph-container {
+    width: 15rem;
+    margin: auto;
+    color: #999;
+    @include center;
+    line-height: 1.25rem;
+  }
+
+  .sign-up-bottom-paragraph-container {
+    span {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+  }
+
+  .sign-up-top-paragraph-container {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
 }

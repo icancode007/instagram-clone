@@ -79,7 +79,7 @@ class SignIn extends React.Component<UserFormProps, State>{
 
         return (
             <div>
-                <div className="form-container">
+                <div className="form-container sign-in">
                     <h1>Instagram</h1>
                     <div>
                         <form onSubmit={this.submit}>
@@ -101,7 +101,7 @@ class SignIn extends React.Component<UserFormProps, State>{
                     </div>
                 </div>
                 <div className="form-container">
-                    <p>Don't have an account? <button onClick={toggleUserForm} className="lg-footer-sign-up-btn">Sign up</button></p>
+                    <p>Don't have an account? <button onClick={toggleUserForm} className="footer-btn">Sign up</button></p>
                 </div>
             </div>);
     }
