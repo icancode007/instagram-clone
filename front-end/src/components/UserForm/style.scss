@@ -1,0 +1,124 @@
+// Shared by Sign In and Sign Up
+@mixin center {
+  text-align: center;
+}
+
+@mixin submit-button-mixin {
+  @content;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.3rem 0.2rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+.submit-container,
+.input-container {
+  margin: 0.5rem auto;
+  height: 1.5rem;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  width: 15rem;
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.2rem;
+  margin-bottom: 0.4rem;
+  border: 0.06rem solid #e6e6e6;
+  background-color: #fafafa;
+  &:focus {
+    border-color: #262626;
+  }
+}
+
+.submit-container {
+  margin: 1.5rem auto 3rem;
+  width: 15.5rem;
+}
+
+.form-container {
+  @include center;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 1px;
+  padding: 10px 0;
+  margin: 12px auto 0px;
+  max-width: 350px;
+  width: 100%;
+  color: #262626;
+
+  input {
+    width: 95%;
+    padding: 0.5rem 0.2;
+    outline: 0;
+    border: none;
+    background-color: #fafafa;
+  }
+
+  .submit-button {
+    @include submit-button-mixin {
+      background-color: #3897f0;
+      border: 1px solid #3897f0;
+    }
+  }
+
+  .submit-button-disable {
+    @include submit-button-mixin {
+      background-color: #c3dffa;
+      border: 1px solid #c3dffa;
+    }
+  }
+
+  .error-container {
+    color: #ee2d3e;
+  }
+
+  .error-image {
+    width: 41px;
+    height: 32px;
+  }
+
+  .footer-btn {
+    background-color: #fff;
+    color: #3897f0;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+// Sign In
+.sign-in {
+  .show-hide-btn {
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: #fafafa;
+    outline: 0;
+  }
+}
+
+// Sign Up
+.sign-up {
+  .sign-up-top-paragraph-container,
+  .sign-up-bottom-paragraph-container {
+    width: 15rem;
+    margin: auto;
+    color: #999;
+    @include center;
+    line-height: 1.25rem;
+  }
+
+  .sign-up-bottom-paragraph-container {
+    span {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+  }
+
+  .sign-up-top-paragraph-container {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
