@@ -10,9 +10,8 @@ import signIn from "./routes/signIn";
 import signUp from "./routes/signUp";
 
 const app = express();
-const port = 8080; // default port to listen
+const port = 8080; // TODO: move this to process.env
 
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger("dev"));
 app.use(session({ resave: true, saveUninitialized: true, secret: "lzxjaSFIHhwoeufhgw983roerlijsdfoi" }));
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -8,7 +8,7 @@ import db from "../db";
 import { getUserLoginOrSigninMethod, UserBy } from "../helpers";
 
 const router = express.Router();
-// WIP signIn NOT TESTED yet
+
 interface IUser {
   id: string;
   email?: string;
@@ -19,6 +19,7 @@ interface IUser {
   created_at: string;
   updated_at: string;
 }
+
 // Passport Strategy middleware
 passport.use(
   new local.Strategy(async (logInHandle, password, done): Promise<void> => {
