@@ -22,19 +22,25 @@ class SignIn extends React.Component<UserFormProps, State>{
         this.setState({ username: event.target.value })
     }
 
-    submit = (event: React.FormEvent): void => {
+    submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         const phoneNumberOrEmail: any = document.getElementById('email-phone-username');
         const passwordInput: any = document.getElementById("password");
+        const { isValidPhoneNumber, isValidEmail, isValidUserName, isValidPassword }= this.props;
 
-        const isValidPhoneNumber = this.props.isValidPhoneNumber(phoneNumberOrEmail.value);
-        const isValidEmail = this.props.isValidEmail(phoneNumberOrEmail.value);
-        const isValidUserName = this.props.isValidUserName(phoneNumberOrEmail.value);
-        const isValidInput = isValidEmail || isValidPhoneNumber || isValidUserName;
-        const isValidPassword = this.props.isValidPassword(passwordInput.value);
+        const isValidInput = isValidEmail(phoneNumberOrEmail.value)
+        || isValidPhoneNumber(phoneNumberOrEmail.value)
+        || isValidUserName(phoneNumberOrEmail.value);
 
-        if (isValidInput && isValidPassword) {
-            // TODO: make logging request
+       if (isValidInput && isValidPassword(passwordInput.value)) {
+          const postSettings = {
+            method: 'POST',
+            body: JSON.stringify({
+                username: phoneNumberOrEmail,
+                password: passwordInput
+              })
+            }
+          await fetch('/login', postSettings);
         } else {
             // checks where is the error
             if (isValidInput) {
