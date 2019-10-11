@@ -22,7 +22,7 @@ export const isValidPhoneNumber = (input: string): boolean => {
 }
 
 export const isValidEmail = (input: string): boolean => {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input)) {
+  if (/^\w+([-]?\w+)*@\w+([-]?\w+)*(\w{2,3})+$/.test(input)) {
     return true;
   }
   return false;

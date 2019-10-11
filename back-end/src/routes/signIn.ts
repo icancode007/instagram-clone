@@ -27,8 +27,10 @@ passport.use(
       switch (getUserLoginOrSigninMethod(logInHandle)) {
         case UserBy.EMAIL:
           q = q.replace(UserBy.USERNAME, UserBy.EMAIL);
+          break;
         case UserBy.PHONE_NUMBER:
           q = q.replace(UserBy.USERNAME, UserBy.PHONE_NUMBER);
+          break;
         default:
           break;
       }

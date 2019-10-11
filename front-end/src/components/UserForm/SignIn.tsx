@@ -26,18 +26,21 @@ class SignIn extends React.Component<UserFormProps, State>{
         event.preventDefault();
         const logInHandle: any = document.getElementById('email-phone-username');
         const passwordInput: any = document.getElementById("password");
-        const { isValidPassword }= this.props;
+        const {  isValidPassword }= this.props;
 
        if (isValidPassword(passwordInput.value)) {
           const postSettings = {
             method: 'POST',
-            body: JSON.stringify({
-                username: logInHandle,
-                password: passwordInput
-              })
-            }
-          const data = await fetch('/login', postSettings);
-        
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+              username: logInHandle,
+              password: passwordInput
+            })
+          }
+          await fetch('/login', postSettings);
+
         } else {
             // checks where is the error
             if (logInHandle) {
