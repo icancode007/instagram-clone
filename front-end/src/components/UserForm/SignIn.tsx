@@ -4,6 +4,7 @@ import { UserFormProps } from './index';
 export interface State {
     isSubmitButtonEnable: boolean,
     username: string,
+    password: string,
     showBtnInPasswordInput: boolean,
     isShowingPassword: boolean,
     error: string
@@ -13,6 +14,7 @@ class SignIn extends React.Component<UserFormProps, State>{
     state = {
         isSubmitButtonEnable: false,
         username: '',
+        password: '',
         showBtnInPasswordInput: false,
         isShowingPassword: false,
         error: ''
@@ -24,26 +26,25 @@ class SignIn extends React.Component<UserFormProps, State>{
 
     submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        const logInHandle: any = document.getElementById('email-phone-username');
-        const passwordInput: any = document.getElementById("password");
         const {  isValidPassword }= this.props;
+        const {username, password} = this.state;
 
-       if (isValidPassword(passwordInput.value)) {
+       if (isValidPassword(password)) {
           const postSettings = {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body:JSON.stringify({
-              username: logInHandle,
-              password: passwordInput
+              'username': username,
+              'password': password
             })
           }
           await fetch('/login', postSettings);
 
         } else {
             // checks where is the error
-            if (logInHandle) {
+            if (username) {
                 // Then the password is invalid
                 this.setState({ error: "password" })
             } else {
@@ -54,7 +55,10 @@ class SignIn extends React.Component<UserFormProps, State>{
 
     handlePasswordChange = (event: { target: { value: string } }): void => {
         if (event.target.value) {
-            this.setState({ showBtnInPasswordInput: true })
+            this.setState({
+               showBtnInPasswordInput: true,
+               password: event.target.value,
+              })
         } else {
             this.setState({ showBtnInPasswordInput: false })
         }
