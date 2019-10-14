@@ -26,7 +26,6 @@ router.post("/", (req: Request, res: Response): void => {
 
     try {
       await db.query(q, values);
-      // NOTE: We need to confirm that the following redirects work with the FE app's proxy
       if (username) {
         login(username, () => res.redirect("/home"));
       } else {

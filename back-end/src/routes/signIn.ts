@@ -22,7 +22,10 @@ interface IUser {
 
 // Passport Strategy middleware
 passport.use(
-  new local.Strategy(async (logInHandle, password, done): Promise<void> => {
+  new local.Strategy(
+
+    (logInHandle, password, done): Promise<void> => {
+      console.log("It did not get here either of course");
       let q = "SELECT * FROM users WHERE username='$1';";
       switch (getUserLoginOrSigninMethod(logInHandle)) {
         case UserBy.EMAIL:
@@ -37,6 +40,7 @@ passport.use(
 
       const values = [logInHandle];
       try {
+        console.log("SHIT");
         const queryResponse = await db.query(q, values);
         const retrievedUser = queryResponse.rows[0];
         if (!retrievedUser) {
@@ -61,6 +65,7 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser(async (userId: string, done): Promise<void> => {
+  console.log("got here");
   const q = "SELECT * FROM users WHERE id=$1;";
   const values = [userId];
   const user = await db.query(q, values);
@@ -68,8 +73,9 @@ passport.deserializeUser(async (userId: string, done): Promise<void> => {
   done(null,  userObj);
 });
 
-router.post("/", passport.authenticate("local"), (_req: Request, res: Response): void => {
-  res.redirect("/home");
+router.post("/", passport.authenticate("local"), (_req: Request): void => {
+  console.log("got here then", _req);
+  // res.redirect("/home");
 });
 
 export default router;

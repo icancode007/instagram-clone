@@ -5,7 +5,10 @@ const { Pool } = pg;
 const pool = new Pool();
 
 const db = {
-  query: (text: string, params?: any): Promise<QueryResult> => pool.query(text, params),
+  query: (text: string, params?: any): Promise<QueryResult> => {
+    console.log("ATTEMPED DB QUERY");
+    return pool.query(text, params);
+  }
 };
 
 export default db;
