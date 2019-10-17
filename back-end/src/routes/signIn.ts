@@ -22,9 +22,7 @@ interface IUser {
 
 // Passport Strategy middleware
 passport.use(
-  new local.Strategy(
-
-    (logInHandle, password, done): Promise<void> => {
+  new local.Strategy(async (logInHandle, password, done): Promise<void> => {
       console.log("It did not get here either of course");
       let q = "SELECT * FROM users WHERE username='$1';";
       switch (getUserLoginOrSigninMethod(logInHandle)) {
@@ -40,13 +38,11 @@ passport.use(
 
       const values = [logInHandle];
       try {
-        console.log("SHIT");
         const queryResponse = await db.query(q, values);
         const retrievedUser = queryResponse.rows[0];
         if (!retrievedUser) {
             return(done(null, false, {message: warnings.USER_DOES_NOT_EXIST}));
          } else {
-           console.log("a user got retrieved");
            bcrypt.compare(password, retrievedUser.password, (result): void => {
              return result
               ? done(null, retrievedUser)
@@ -65,7 +61,6 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser(async (userId: string, done): Promise<void> => {
-  console.log("got here");
   const q = "SELECT * FROM users WHERE id=$1;";
   const values = [userId];
   const user = await db.query(q, values);
@@ -74,8 +69,7 @@ passport.deserializeUser(async (userId: string, done): Promise<void> => {
 });
 
 router.post("/", passport.authenticate("local"), (_req: Request): void => {
-  console.log("got here then", _req);
-  // res.redirect("/home");
+  res.redirect("/home");
 });
 
 export default router;
