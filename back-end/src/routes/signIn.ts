@@ -23,8 +23,7 @@ interface IUser {
 // Passport Strategy middleware
 passport.use(
   new local.Strategy(async (logInHandle, password, done): Promise<void> => {
-      console.log("It did not get here either of course");
-      let q = "SELECT * FROM users WHERE username='$1';";
+      let q = "SELECT * FROM users WHERE username = $1;";
       switch (getUserLoginOrSigninMethod(logInHandle)) {
         case UserBy.EMAIL:
           q = q.replace(UserBy.USERNAME, UserBy.EMAIL);
@@ -34,20 +33,20 @@ passport.use(
           break;
         default:
           break;
-      }
-
+    }
       const values = [logInHandle];
       try {
         const queryResponse = await db.query(q, values);
         const retrievedUser = queryResponse.rows[0];
+
         if (!retrievedUser) {
-            return(done(null, false, {message: warnings.USER_DOES_NOT_EXIST}));
-         } else {
-           bcrypt.compare(password, retrievedUser.password, (result): void => {
-             return result
-              ? done(null, retrievedUser)
-              : done(null, false, {message: warnings.INCORRECT_PASSWORD});
-        });
+          return(done(null, false, {message: warnings.USER_DOES_NOT_EXIST}));
+       } else {
+         bcrypt.compare(password, retrievedUser.password, (result): void => {
+           return result
+            ? done(null, retrievedUser)
+            : done(null, false, {message: warnings.INCORRECT_PASSWORD});
+          });
       }
     } catch (err) {
       return err;
@@ -61,15 +60,15 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser(async (userId: string, done): Promise<void> => {
-  const q = "SELECT * FROM users WHERE id=$1;";
+  const q = "SELECT * FROM users WHERE id = $1;";
   const values = [userId];
   const user = await db.query(q, values);
   const userObj = user.rows[0];
   done(null,  userObj);
 });
 
-router.post("/", passport.authenticate("local"), (_req: Request): void => {
-  res.redirect("/home");
+router.post("/", passport.authenticate("local"), (_req: Request, res: Response): void => {
+    res.redirect("/myfeed");
 });
 
 export default router;

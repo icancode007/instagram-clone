@@ -6,7 +6,6 @@ const pool = new Pool();
 
 const db = {
   query: (text: string, params?: any): Promise<QueryResult> => {
-    console.log("ATTEMPED DB QUERY");
     return pool.query(text, params);
   }
 };
