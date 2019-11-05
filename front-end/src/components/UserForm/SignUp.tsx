@@ -3,6 +3,9 @@ import errorImg from './assets/error.png';
 import { UserFormProps } from './index';
 
 interface State {
+  handle: string,
+  fullName: string,
+  
   errors: string[],
   numberOfErrors: number,
   showBtnInPasswordInput: boolean,
@@ -11,6 +14,7 @@ interface State {
 
 class SignUp extends React.Component<UserFormProps, State>{
   state = {
+    handle: '',
     errors: [''],
     numberOfErrors: 0,
     showBtnInPasswordInput: false,
@@ -31,31 +35,9 @@ class SignUp extends React.Component<UserFormProps, State>{
 
   submit = (event: any): void => {
     event.preventDefault();
-    // Elements
-    const phoneNumberOrEmail: any = document.getElementById('email-phone');
-    const passwordInput: any = document.getElementById("password");
-    const userNameInput: any = document.getElementById('username');
-    const fullNameInput: any = document.getElementById('full-name');
-    // Validation
-    const isValidPhoneNumber = this.props.isValidPhoneNumber(phoneNumberOrEmail.value);
-    const isValidEmail = this.props.isValidEmail(phoneNumberOrEmail.value);
-    const isValidName = this.props.isValidName(fullNameInput.value);
-    const isValidUserName = this.props.isValidUserName(userNameInput.value);
-    const isValidPassword = this.props.isValidPassword(passwordInput.value);
+    const { isValidPassword } = this.props;
+    const { handle } = this.state;
 
-    const errorReport = {
-      'emailOrPhone': { error: !(isValidPhoneNumber || isValidEmail), position: 0 },
-      'fullName': { error: !isValidName, position: 1 },
-      'username': { error: !isValidUserName, position: 2 },
-      'password': { error: !isValidPassword, position: 3 }
-    }
-
-    const readyToSubmit = this.targetErrors(errorReport);
-
-    if (readyToSubmit) {
-      // TODO: make register request
-      alert('ok')
-    }
   }
 
   handlePasswordChange = (event: { target: { value: string } }): void => {

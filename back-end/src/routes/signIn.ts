@@ -68,7 +68,7 @@ passport.deserializeUser(async (userId: string, done): Promise<void> => {
 });
 
 router.post("/", passport.authenticate("local"), (_req: Request, res: Response): void => {
-    res.redirect("/myfeed");
+    console.log("SUCCESS");
 });
 
 export default router;

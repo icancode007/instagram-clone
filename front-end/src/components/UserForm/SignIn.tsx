@@ -26,7 +26,7 @@ class SignIn extends React.Component<UserFormProps, State>{
 
     submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        const { isValidPassword }= this.props;
+        const { isValidPassword } = this.props;
         const { username, password } = this.state;
         const searchParams = new URLSearchParams({
           username, password
