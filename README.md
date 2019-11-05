@@ -1,4 +1,5 @@
 # Bettergram
+This is a Remake of a previous project to leverage TypeScript, make use of acutal queries instead of an orm structure and practice my own style instead of using bootstrap
 
 An Instagram Clone application that contains some of the features that the real instagram has. Some of these features are likes,comments,profiles and others.
 
