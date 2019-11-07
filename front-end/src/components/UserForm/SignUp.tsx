@@ -3,9 +3,10 @@ import errorImg from './assets/error.png';
 import { UserFormProps } from './index';
 
 interface State {
-  handle: string,
+  username: string,
+  emailOrPhone: string,
+  password: string,
   fullName: string,
-  
   errors: string[],
   numberOfErrors: number,
   showBtnInPasswordInput: boolean,
@@ -14,7 +15,10 @@ interface State {
 
 class SignUp extends React.Component<UserFormProps, State>{
   state = {
-    handle: '',
+    username: '',
+    emailOrPhone: '',
+    fullName: '',
+    password: '',
     errors: [''],
     numberOfErrors: 0,
     showBtnInPasswordInput: false,
@@ -22,9 +26,9 @@ class SignUp extends React.Component<UserFormProps, State>{
   }
 
   togglePassword = () => {
-    const passwordInput: any = document.getElementById("password");
+    const passwordInput: any = document.getElementById('password');
 
-    if (passwordInput.type === "password") {
+    if (passwordInput.type === 'password') {
       this.setState({ isShowingPassword: true });
       passwordInput.type = 'text';
     } else {
@@ -36,17 +40,37 @@ class SignUp extends React.Component<UserFormProps, State>{
   submit = (event: any): void => {
     event.preventDefault();
     const { isValidPassword } = this.props;
-    const { handle } = this.state;
-
+    const { username, password, emailOrPhone } = this.state;
+    //POST
   }
 
-  handlePasswordChange = (event: { target: { value: string } }): void => {
-    if (event.target.value) {
-      this.setState({ showBtnInPasswordInput: true })
-    } else {
-      this.setState({ showBtnInPasswordInput: false })
+  handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    const { value } = event.currentTarget;
+    const field  = event.currentTarget.getAttribute('data-field');
+    switch(field){
+      case 'username':
+        this.setState({ username: value });
+        this.removeErrorImg(2);
+        break;
+      case 'emailOrPhone':
+        this.setState({ emailOrPhone: value });
+        this.removeErrorImg(0);
+        break;
+      case 'password':
+        if (value) {
+          this.setState({ showBtnInPasswordInput: true, password: value })
+        } else {
+          this.setState({ showBtnInPasswordInput: false })
+        }
+        this.removeErrorImg(3);
+        break;
+      case 'fullName':
+        this.setState({ password: value });
+        this.removeErrorImg(1);
+        break;
+      default:
+        break;
     }
-    this.removeErrorImg(3);
   }
 
   targetErrors = (errorReport: Object): boolean => {
@@ -76,7 +100,7 @@ class SignUp extends React.Component<UserFormProps, State>{
         let updateNumberOfErrors = prevState.numberOfErrors;
 
         if (updatedErrors[inputPosition]) {
-          updatedErrors[inputPosition] = "";
+          updatedErrors[inputPosition] = '';
           updateNumberOfErrors--;
         }
 
@@ -95,57 +119,73 @@ class SignUp extends React.Component<UserFormProps, State>{
     if (numberOfErrors > 1) {
       return 'These fields are required.'
     } else if (numberOfErrors === 1) {
-      return "This field is required.";
+      return 'This field is required.';
     } else {
       return null;
     }
   }
 
+  renderInputFields(){
+    const { isShowingPassword, showBtnInPasswordInput } = this.state;
+    const placeholders: any = {
+      'email-phone': 'Mobile number or email',
+      'full-name': 'Full Name',
+      'username': 'Username',
+      'password': 'Password'
+    }
+
+    return (
+      Object.keys(placeholders).map((field: string, idx: number) => (
+        <div className='input-container' key={`key-${idx}`}>
+          <input
+            id={field}
+            type={field == 'password'? 'password' : 'text'}
+            className='sign-up-input'
+            placeholder={placeholders[field]}
+            onChange={this.handleFieldChange}
+            data-field={field}
+          />
+          {
+            this.renderInputWithError(`input-${idx}`)
+            ? <img className='error-image' src={errorImg} alt='error' />
+            : null
+          }
+          {
+            showBtnInPasswordInput && field === 'password'
+            ? <button className='show-hide-btn' onClick={this.togglePassword}> {isShowingPassword ? 'Hide' : 'Show'}</button>
+            : null
+          }
+        </div>
+      ))
+    )
+  }
+
   render() {
     const { toggleUserForm } = this.props;
-    const { isShowingPassword, showBtnInPasswordInput } = this.state;
     return (
       <div>
-        <div className="form-container sign-up">
+        <div className='form-container sign-up'>
           <h1>Instagram</h1>
-          <div className="sign-up-top-paragraph-container">
+          <div className='sign-up-top-paragraph-container'>
             <p>Sign up to see photos and videos from your friends.</p>
           </div>
           <div>
             <form onSubmit={this.submit} >
-              <div className="input-container">
-                <input id="email-phone" type="text" className="sign-up-input" placeholder="Mobile number or email" onChange={() => this.removeErrorImg(0)} />
-                {this.renderInputWithError('input-0') ? <img className="error-image" src={errorImg} alt="error" /> : null}
+                {this.renderInputFields()}
+              <div className='submit-container'>
+                <input type='submit' className='submit-button' value='Sign Up' />
               </div>
-              <div className="input-container">
-                <input id="full-name" type="text" className="sign-up-input" placeholder="Full Name" onChange={() => this.removeErrorImg(1)} />
-                {this.renderInputWithError('input-1') ? <img className="error-image" src={errorImg} alt="error" /> : null}
+              <div className='error-container'>
+                {this.displayErrorMessage()}
               </div>
-              <div className="input-container">
-                <input id="username" type="text" className="sign-up-input" placeholder="Username" onChange={() => this.removeErrorImg(2)} />
-                {this.renderInputWithError('input-2') ? <img className="error-image" src={errorImg} alt="error" /> : null}
-              </div>
-              <div className="input-container">
-                <input id="password" type="password" className="sign-up-input" placeholder="Password" onChange={this.handlePasswordChange} />
-                {this.renderInputWithError('input-3') ? <img className="error-image" src={errorImg} alt="error" /> : null}
-                {showBtnInPasswordInput ? <button className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</button> : null}
-              </div>
-              <div className="submit-container">
-                <input type="submit" className="submit-button" value="Sign Up" />
-              </div>
-              <div className="error-container">
-                {
-                  this.displayErrorMessage()
-                }
-              </div>
-              <div className="sign-up-bottom-paragraph-container">
+              <div className='sign-up-bottom-paragraph-container'>
                 <p>By signing up, you agree to our <span>Terms</span> , <span>Data Policy</span> and <span>Cookies Policy</span>.</p>
               </div>
             </form>
           </div>
         </div>
-        <div className="form-container">
-          <p>Have an account? <button onClick={() => toggleUserForm('signUp')} className="footer-btn">Log In</button></p>
+        <div className='form-container'>
+          <p>Have an account? <button onClick={() => toggleUserForm('signUp')} className='footer-btn'>Log In</button></p>
         </div>
       </div>
     );
