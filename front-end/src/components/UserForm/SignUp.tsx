@@ -46,7 +46,8 @@ class SignUp extends React.Component<UserFormProps, State>{
 
   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
-    const field  = event.currentTarget.getAttribute('data-field');
+    const field = event.currentTarget.getAttribute('data-field');
+
     switch(field){
       case 'username':
         this.setState({ username: value });
@@ -77,6 +78,7 @@ class SignUp extends React.Component<UserFormProps, State>{
     const errors = [];
     const inputs = Object.values(errorReport);
     let numberOfErrors = 0;
+
     for (let i = 0; i < inputs.length; i++) {
       if (inputs[i].error) {
         errors[i] = `input-${i}`;
@@ -109,10 +111,7 @@ class SignUp extends React.Component<UserFormProps, State>{
     }
   }
 
-  renderInputWithError = (searchTerm: string): boolean => {
-    const { errors } = this.state;
-    return errors.includes(searchTerm);
-  }
+  renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
 
   displayErrorMessage = () => {
     const { numberOfErrors } = this.state;
