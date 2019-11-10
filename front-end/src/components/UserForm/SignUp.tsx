@@ -1,10 +1,10 @@
 import React from 'react';
 import errorImg from './assets/error.png';
-import { UserFormProps } from './index';
+import { isValidPassword } from '../../bll/authoringBll';
 
 interface State {
   username: string,
-  emailOrPhone: string,
+  emailOrPhoneNumber: string,
   password: string,
   fullName: string,
   errors: string[],
@@ -13,10 +13,14 @@ interface State {
   isShowingPassword: boolean,
 }
 
-class SignUp extends React.Component<UserFormProps, State>{
+interface Props {
+  toggleUserForm: () => void
+}
+
+class SignUp extends React.Component<Props, State>{
   state = {
     username: '',
-    emailOrPhone: '',
+    emailOrPhoneNumber: '',
     fullName: '',
     password: '',
     errors: [''],
@@ -39,9 +43,14 @@ class SignUp extends React.Component<UserFormProps, State>{
 
   submit = (event: any): void => {
     event.preventDefault();
-    const { isValidPassword } = this.props;
-    const { username, password, emailOrPhone } = this.state;
-    //POST
+    const { emailOrPhoneNumber, fullName, username, password, } = this.state;
+    const postParams = new URLSearchParams({
+      emailOrPhoneNumber,
+      fullName,
+      username,
+      password,
+    });
+    //Post REQ HERE
   }
 
   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -54,7 +63,7 @@ class SignUp extends React.Component<UserFormProps, State>{
         this.removeErrorImg(2);
         break;
       case 'emailOrPhone':
-        this.setState({ emailOrPhone: value });
+        this.setState({ emailOrPhoneNumber: value });
         this.removeErrorImg(0);
         break;
       case 'password':
@@ -138,7 +147,7 @@ class SignUp extends React.Component<UserFormProps, State>{
         <div className='input-container' key={`key-${idx}`}>
           <input
             id={field}
-            type={field == 'password'? 'password' : 'text'}
+            type={field === 'password'? 'password' : 'text'}
             className='sign-up-input'
             placeholder={placeholders[field]}
             onChange={this.handleFieldChange}
@@ -162,7 +171,7 @@ class SignUp extends React.Component<UserFormProps, State>{
   render() {
     const { toggleUserForm } = this.props;
     return (
-      <div>
+      <>
         <div className='form-container sign-up'>
           <h1>Instagram</h1>
           <div className='sign-up-top-paragraph-container'>
@@ -184,9 +193,9 @@ class SignUp extends React.Component<UserFormProps, State>{
           </div>
         </div>
         <div className='form-container'>
-          <p>Have an account? <button onClick={() => toggleUserForm('signUp')} className='footer-btn'>Log In</button></p>
+          <p>Have an account? <button onClick={toggleUserForm} className='footer-btn'>Log In</button></p>
         </div>
-      </div>
+      </>
     );
   }
 }
