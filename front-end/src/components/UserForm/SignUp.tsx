@@ -41,16 +41,25 @@ class SignUp extends React.Component<Props, State>{
     }
   }
 
-  submit = (event: any): void => {
+  submit = async (event: any): Promise<void> => {
     event.preventDefault();
+
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
-    const postParams = new URLSearchParams({
-      emailOrPhoneNumber,
-      fullName,
-      username,
-      password,
-    });
-    //Post REQ HERE
+    const postSettings =  {
+      method: 'POST',
+      body: new URLSearchParams({
+        emailOrPhoneNumber,
+        fullName,
+        username,
+        password,
+      }),
+    }
+
+    if(isValidPassword(password)){
+      await fetch('/signUp', postSettings)
+    } else {
+      console.log('FAILED');
+    }
   }
 
   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -62,7 +71,7 @@ class SignUp extends React.Component<Props, State>{
         this.setState({ username: value });
         this.removeErrorImg(2);
         break;
-      case 'emailOrPhone':
+      case 'emailOrPhoneNumber':
         this.setState({ emailOrPhoneNumber: value });
         this.removeErrorImg(0);
         break;
@@ -75,7 +84,7 @@ class SignUp extends React.Component<Props, State>{
         this.removeErrorImg(3);
         break;
       case 'fullName':
-        this.setState({ password: value });
+        this.setState({ fullName: value });
         this.removeErrorImg(1);
         break;
       default:
@@ -136,8 +145,8 @@ class SignUp extends React.Component<Props, State>{
   renderInputFields(){
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     const placeholders: any = {
-      'email-phone': 'Mobile number or email',
-      'full-name': 'Full Name',
+      'emailOrPhoneNumber': 'Mobile number or email',
+      'fullName': 'Full Name',
       'username': 'Username',
       'password': 'Password'
     }
@@ -147,6 +156,7 @@ class SignUp extends React.Component<Props, State>{
         <div className='input-container' key={`key-${idx}`}>
           <input
             id={field}
+            key={field+idx}
             type={field === 'password'? 'password' : 'text'}
             className='sign-up-input'
             placeholder={placeholders[field]}

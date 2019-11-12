@@ -32,14 +32,13 @@ class SignIn extends React.Component<Props, State>{
         event.preventDefault();
 
         const { username, password } = this.state;
-        const searchParams = new URLSearchParams({
-          username, password
-        });
 
        if (isValidPassword(password)) {
           const postSettings = {
             method: 'POST',
-            body: searchParams,
+            body: new URLSearchParams({
+              username, password
+            }),
           }
           await fetch('/signIn', postSettings);
 
