@@ -27,9 +27,9 @@ router.post("/", (req: Request, res: Response): void => {
     try {
       await db.query(q, values);
       if (username) {
-        login(username, () => res.redirect("/myfeed"));
+        login(username, () => console.log("ATTEMPTED TO LOG IN"));
       } else {
-        login(emailOrPhoneNumber, () => res.redirect("/myfeed"));
+        login(emailOrPhoneNumber, () => console.log("ATTEMPTED TO LOG IN"));
       }
     } catch (err) {
       const warn = warnings.ACCOUNT_EXIST(err.detail);
