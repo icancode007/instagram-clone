@@ -1,18 +1,27 @@
-import * as React from 'react';
+import React from 'react';
+import './style.scss';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
-export default class Counter extends React.Component {
-  //could be refactored to functional component if hooks will be used
-  componentDidMount(){
-    fetch('/root')
-    .then(res => res.json())
-    .then(data => console.log(data));
+interface State {
+  isSigningIn: boolean,
+}
+
+export default class Counter extends React.Component<Object, State> {
+  state = {
+    isSigningIn: false
   }
 
-  render () {
-    return (
-      <div>
-      testing
-      </div>
-    );
+  toggleUserForm = (): void => {
+      this.setState(
+        (prevState: State) => this.setState({isSigningIn: !prevState.isSigningIn})
+      );
+  }
+
+  render(): JSX.Element {
+    const { isSigningIn } = this.state;
+    return isSigningIn
+      ? <SignIn toggleUserForm={this.toggleUserForm} />
+      : <SignUp toggleUserForm={this.toggleUserForm} />
   }
 }
