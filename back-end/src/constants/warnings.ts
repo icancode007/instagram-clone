@@ -1,6 +1,7 @@
 import { getUserLoginOrSigninMethod, UserBy } from "../helpers";
 const warnings = {
   ACCOUNT_EXIST: (errHandle: string): string => {
+    if (errHandle === undefined) { return; }
     // Todo: formulate a single regex to do this
     const frontHandleIdx = errHandle.search("=+") + 2; // index where original string should become a substring
     const frontHandle = errHandle.slice(frontHandleIdx, errHandle.length - 1);

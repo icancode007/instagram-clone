@@ -7,8 +7,8 @@ import db from "../db";
 const router = express.Router();
 
 router.post("/", (req: Request, res: Response): void => {
-  const {login} = req;
-  const {full_name: fullName, password, emailOrPhoneNumber, username} = req.body;
+  const { login } = req;
+  const { fullName, password, emailOrPhoneNumber, username } = req.body;
   const isEmailField = emailOrPhoneNumber.includes("@");
 
   bcrypt.hash(password, 10, async (_err: Error, encryptedPwd: string): Promise<void> => {
@@ -27,9 +27,9 @@ router.post("/", (req: Request, res: Response): void => {
     try {
       await db.query(q, values);
       if (username) {
-        login(username, () => res.redirect("/home"));
+        login(username, () => console.log("ATTEMPTED TO LOG IN"));
       } else {
-        login(emailOrPhoneNumber, () => res.redirect("/home"));
+        login(emailOrPhoneNumber, () => console.log("ATTEMPTED TO LOG IN"));
       }
     } catch (err) {
       const warn = warnings.ACCOUNT_EXIST(err.detail);
