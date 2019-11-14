@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserFormProps } from './index';
+import { isValidPassword } from '../../bll/authoringBll';
 
 export interface State {
     isSubmitButtonEnable: boolean,
@@ -10,7 +10,11 @@ export interface State {
     error: string
 }
 
-class SignIn extends React.Component<UserFormProps, State>{
+interface Props {
+  toggleUserForm: () => void
+}
+
+class SignIn extends React.Component<Props, State>{
     state = {
         isSubmitButtonEnable: false,
         username: '',
@@ -26,16 +30,15 @@ class SignIn extends React.Component<UserFormProps, State>{
 
     submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-        const { isValidPassword } = this.props;
+
         const { username, password } = this.state;
-        const searchParams = new URLSearchParams({
-          username, password
-        });
 
        if (isValidPassword(password)) {
           const postSettings = {
             method: 'POST',
-            body: searchParams,
+            body: new URLSearchParams({
+              username, password
+            }),
           }
           await fetch('/signIn', postSettings);
 

@@ -18,8 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.locals.date = (date: string) => dateformat(date, "dddd d mmmm yyyy");
-
 // passport helper of currentuser data using db
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
