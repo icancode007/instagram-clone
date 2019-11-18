@@ -6,7 +6,7 @@ import db from "../db";
 
 const router = express.Router();
 
-router.post("/", (req: Request, res: Response): void => {
+router.post("/", (req: Request, res: Response, next): void => {
   const { login } = req;
   const { fullName, password, emailOrPhoneNumber, username } = req.body;
   const isEmailField = emailOrPhoneNumber.includes("@");
@@ -14,7 +14,7 @@ router.post("/", (req: Request, res: Response): void => {
   bcrypt.hash(password, 10, async (_err: Error, encryptedPwd: string): Promise<void> => {
     const emailRep = "email,";
     const phoneNumberRep = "phone_number,";
-    const q = "INSERT INTO users(phone_number, email, full_name, username, password) VALUES($1, $2, $3, $4);"
+    const q = "INSERT INTO users(phone_number, email, full_name, username, password) VALUES($1, $2, $3, $4) RETURNING *;"
      .replace(isEmailField ? phoneNumberRep : emailRep, ""); // If an email was provided remove the phone_number field and viceversa
 
     const values = [
@@ -25,11 +25,13 @@ router.post("/", (req: Request, res: Response): void => {
     ];
 
     try {
-      await db.query(q, values);
-      if (username) {
-        login(username, () => console.log("ATTEMPTED TO LOG IN"));
-      } else {
-        login(emailOrPhoneNumber, () => console.log("ATTEMPTED TO LOG IN"));
+      const result = await db.query(q, values);
+      const user = result.rows[0];
+      if (user) {
+        login(user, (err) => {
+          if (err) { return res.send(err); }
+          res.send(user);
+        });
       }
     } catch (err) {
       const warn = warnings.ACCOUNT_EXIST(err.detail);

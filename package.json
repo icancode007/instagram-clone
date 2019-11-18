@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "concurrently": "^5.0.0",
+    "new-package": "^0.1.0"
+  },
+  "scripts": {
+    "server": "(cd back-end && yarn start)",
+    "client": "(cd front-end && yarn start)",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  }
+}
