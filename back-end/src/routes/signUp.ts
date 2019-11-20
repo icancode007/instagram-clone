@@ -27,15 +27,11 @@ router.post("/", (req: Request, res: Response, next): void => {
     try {
       const result = await db.query(q, values);
       const user = result.rows[0];
-      if (user) {
-        login(user, (err) => {
-          if (err) { return res.send(err); }
-          res.send(user);
-        });
+      if (!user) {
+        res.send(warnings.ACCOUNT_EXIST("username"));
       }
     } catch (err) {
-      const warn = warnings.ACCOUNT_EXIST(err.detail);
-      res.send(warn);
+      res.send(warnings.ACCOUNT_EXIST(err.detail));
     }
   });
 });
