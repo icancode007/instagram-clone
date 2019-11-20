@@ -10,7 +10,7 @@ An Instagram Clone application that contains some of the features that the real 
 
 ![](https://img.shields.io/badge/technology-node-green) ![](https://img.shields.io/badge/technology-aws--S3-orange) ![](https://img.shields.io/badge/technology-postgreSQL-blue) ![](https://img.shields.io/badge/technology-react-darkgreen) ![](https://img.shields.io/badge/technology-postgreSQL-lightblue)![](https://img.shields.io/badge/technology-Typescript-darkblue)
 
-#features
+# features
 
 ### Likes
 ![Likes](public/like.gif)
@@ -23,7 +23,8 @@ An Instagram Clone application that contains some of the features that the real 
 ### Profile
 ![Profile](public/profile.gif)
 
-#Running App
+# Running App
+
 Both the server and the client are intertwined with "concurrently", to start both just do from the root of the project:  
 `yarn run dev`
 
