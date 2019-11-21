@@ -6,8 +6,7 @@ import db from "../db";
 
 const router = express.Router();
 
-router.post("/", (req: Request, res: Response, next): void => {
-  const { login } = req;
+router.post("/", (req: Request, res: Response): void => {
   const { fullName, password, emailOrPhoneNumber, username } = req.body;
   const isEmailField = emailOrPhoneNumber.includes("@");
 
@@ -27,11 +26,14 @@ router.post("/", (req: Request, res: Response, next): void => {
     try {
       const result = await db.query(q, values);
       const user = result.rows[0];
+
       if (!user) {
-        res.send(warnings.ACCOUNT_EXIST("username"));
+        res.send({error: warnings.ACCOUNT_EXIST("username")});
+      } else {
+        res.send({id : user.id, sucess: true});
       }
     } catch (err) {
-      res.send(warnings.ACCOUNT_EXIST(err.detail));
+      res.send({ error: warnings.ACCOUNT_EXIST(err.detail)});
     }
   });
 });
