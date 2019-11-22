@@ -56,7 +56,9 @@ class SignUp extends React.Component<Props, State>{
     }
 
     if(isValidPassword(password)){
-      await fetch('/signUp', postSettings)
+      const res = await fetch('/signUp', postSettings)
+      const json = await res.json()
+      console.log("RES: ", json);
     } else {
       console.log('FAILED');
     }
