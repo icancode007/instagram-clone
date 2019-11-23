@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "concurrently": "^5.0.0",
-    "new-package": "^0.1.0"
+    "concurrently": "^5.0.0"
   },
   "scripts": {
     "server": "(cd back-end && yarn start)",
