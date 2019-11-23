@@ -6,8 +6,9 @@
     "jsRules": {},
     "rules": {
         "trailing-comma": [ false ],
-        "interface-name": [], // no prefix,
-        "variable-name": ["allow-snake-case"], // any
+        "interface-name": [],
+        "variable-name": ["allow-snake-case"],
+        "quotemark": [ true, "single" ],
         "max-line-length": [false],
         "no-debugger": false,
         "no-console": [false]

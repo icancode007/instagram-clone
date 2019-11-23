@@ -1,4 +1,4 @@
-import pg, { QueryResult } from "pg";
+import pg, { QueryResult } from 'pg';
 
 const { Pool } = pg;
 // the db connection is env variable based @see https://node-postgres.com/features/connecting
