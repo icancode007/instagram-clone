@@ -58,7 +58,7 @@ class SignUp extends React.Component<Props, State>{
     if(isValidPassword(password)){
       const res = await fetch('/signUp', postSettings)
       const json = await res.json()
-      console.log("RES: ", json);
+      //TODO handle protected routes from res JWT
     } else {
       console.log('FAILED');
     }

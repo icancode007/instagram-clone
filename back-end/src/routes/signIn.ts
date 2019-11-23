@@ -1,11 +1,11 @@
-import bcrypt from "bcrypt";
-import express from "express";
-import { Request, Response } from "express";
-import passport from "passport";
-import local from "passport-local";
-import warnings from "../constants/warnings";
-import db from "../db";
-import { getUserLoginOrSigninMethod, UserBy } from "../helpers";
+import bcrypt from 'bcrypt';
+import express from 'express';
+import { Request, Response } from 'express';
+import passport from 'passport';
+import local from 'passport-local';
+import warnings from '../constants/warnings';
+import db from '../db';
+import { getUserLoginOrSigninMethod, UserBy } from '../helpers';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ interface IUser {
 // Passport Strategy middleware
 passport.use(
   new local.Strategy(async (logInHandle, password, done): Promise<void> => {
-      let q = "SELECT * FROM users WHERE username = $1;";
+      let q = 'SELECT * FROM users WHERE username = $1;';
       switch (getUserLoginOrSigninMethod(logInHandle)) {
         case UserBy.EMAIL:
           q = q.replace(UserBy.USERNAME, UserBy.EMAIL);
@@ -60,15 +60,15 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser(async (userId: string, done): Promise<void> => {
-  const q = "SELECT * FROM users WHERE id = $1;";
+  const q = 'SELECT * FROM users WHERE id = $1;';
   const values = [userId];
   const user = await db.query(q, values);
   const userObj = user.rows[0];
   done(null,  userObj);
 });
 
-router.post("/", passport.authenticate("local"), (_req: Request, res: Response): void => {
-    console.log("SUCCESS");
+router.post('/', passport.authenticate('local'), (_req: Request, res: Response): void => {
+    console.log('SUCCESS');
 });
 
 export default router;

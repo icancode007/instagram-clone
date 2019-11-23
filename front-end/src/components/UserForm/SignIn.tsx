@@ -46,9 +46,9 @@ class SignIn extends React.Component<Props, State>{
             // checks where is the error
             if (username) {
                 // Then the password is invalid
-                this.setState({ error: "password" })
+                this.setState({ error: 'password' })
             } else {
-                this.setState({ error: "username" })
+                this.setState({ error: 'username' })
             }
         }
     }
@@ -65,9 +65,9 @@ class SignIn extends React.Component<Props, State>{
     }
 
     togglePassword = () => {
-        const passwordInput: any = document.getElementById("password");
+        const passwordInput: any = document.getElementById('password');
 
-        if (passwordInput.type === "password") {
+        if (passwordInput.type === 'password') {
             this.setState({ isShowingPassword: true });
             passwordInput.type = 'text';
         } else {
@@ -81,50 +81,50 @@ class SignIn extends React.Component<Props, State>{
       const { username, isShowingPassword, showBtnInPasswordInput, error } = this.state;
       let errorMessage;
 
-      if (error === "username") {
-          errorMessage = <div className="error-container"><span>The username you entered doesn't belong to an account.</span></div>;
-      } else if (error === "password") {
-          errorMessage = <div className="error-container"><span>Sorry, your password was incorrect.</span></div>;
+      if (error === 'username') {
+          errorMessage = <div className='error-container'><span>The username you entered doesn't belong to an account.</span></div>;
+      } else if (error === 'password') {
+          errorMessage = <div className='error-container'><span>Sorry, your password was incorrect.</span></div>;
       }
 
       return (
         <>
-          <div className="form-container sign-in">
+          <div className='form-container sign-in'>
               <h1>Instagram</h1>
               <form onSubmit={this.submit}>
-                  <div className="input-container">
+                  <div className='input-container'>
                       <input
-                        id="email-phone-username"
-                        type="text"
-                        placeholder="Phone number, username, or email"
+                        id='email-phone-username'
+                        type='text'
+                        placeholder='Phone number, username, or email'
                         onChange={this.handleUserNameChange}
                         value={username}
                       />
                   </div>
-                  <div className="input-container">
+                  <div className='input-container'>
                       <input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
+                        id='password'
+                        type='password'
+                        placeholder='Password'
                         onChange={this.handlePasswordChange}
                       />
                       {
                         showBtnInPasswordInput
-                        ? <button className="show-hide-btn" onClick={this.togglePassword}> {isShowingPassword ? "Hide" : "Show"}</button> :
+                        ? <button className='show-hide-btn' onClick={this.togglePassword}> {isShowingPassword ? 'Hide' : 'Show'}</button> :
                          null
                        }
                   </div>
-                  <div className="submit-container">
+                  <div className='submit-container'>
                       {username
-                          ? <input type="submit" className="submit-button" value="Log In" />
-                          : <input type="submit" className="submit-button-disable" value="Log In" disabled />
+                          ? <input type='submit' className='submit-button' value='Log In' />
+                          : <input type='submit' className='submit-button-disable' value='Log In' disabled />
                       }
                   </div>
                   {errorMessage}
               </form>
           </div>
-          <div className="form-container">
-              <p>Don't have an account? <button onClick={toggleUserForm} className="footer-btn">Sign up</button></p>
+          <div className='form-container'>
+              <p>Don't have an account? <button onClick={toggleUserForm} className='footer-btn'>Sign up</button></p>
           </div>
         </>
       );
