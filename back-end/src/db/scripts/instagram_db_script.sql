@@ -14,14 +14,14 @@ CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	username TEXT NOT NULL,
 	phone_number TEXT,
-  email TEXT,
+	email TEXT,
 	full_name TEXT NOT NULL,
 	password TEXT NOT NULL,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	UNIQUE(username),
-  UNIQUE(phone_number),
-  UNIQUE(email)
+	UNIQUE(phone_number),
+	UNIQUE(email)
 );
 
 CREATE TRIGGER set_timestamp
