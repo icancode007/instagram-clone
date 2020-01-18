@@ -1,27 +1,27 @@
 import React from 'react';
-import './style.scss';
-import SignUp from './SignUp';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
+import './style.scss';
 
 interface State {
-  isSigningIn: boolean,
+  isSigningIn: boolean;
 }
 
-export default class Counter extends React.Component<Object, State> {
-  state = {
+export default class Counter extends React.Component<object, State> {
+  public state = {
     isSigningIn: false
-  }
+  };
 
-  toggleUserForm = (): void => {
+  public toggleUserForm = (): void => {
       this.setState(
         (prevState: State) => this.setState({isSigningIn: !prevState.isSigningIn})
       );
   }
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { isSigningIn } = this.state;
     return isSigningIn
       ? <SignIn toggleUserForm={this.toggleUserForm} />
-      : <SignUp toggleUserForm={this.toggleUserForm} />
+      : <SignUp toggleUserForm={this.toggleUserForm} />;
   }
 }

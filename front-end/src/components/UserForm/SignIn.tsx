@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { isValidPassword } from '../../bll/authoringBll';
 
 export interface State {
@@ -14,7 +14,7 @@ interface Props {
   toggleUserForm: () => void
 }
 
-class SignIn extends React.Component<Props, State>{
+class SignIn extends Component<Props, State>{
     state = {
         isSubmitButtonEnable: false,
         username: '',

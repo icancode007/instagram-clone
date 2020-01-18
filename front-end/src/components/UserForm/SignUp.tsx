@@ -1,35 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signUp } from '../../actions/authUser';
 import errorImg from './assets/error.png';
-import { isValidPassword } from '../../bll/authoringBll';
 
 interface State {
-  username: string,
-  emailOrPhoneNumber: string,
-  password: string,
-  fullName: string,
-  errors: string[],
-  numberOfErrors: number,
-  showBtnInPasswordInput: boolean,
-  isShowingPassword: boolean,
+  username: string;
+  emailOrPhoneNumber: string;
+  password: string;
+  fullName: string;
+  errors: string[];
+  numberOfErrors: number;
+  showBtnInPasswordInput: boolean;
+  isShowingPassword: boolean;
 }
 
 interface Props {
-  toggleUserForm: () => void
+  toggleUserForm: () => void;
+  signUp: (
+      signUpReq: {
+          emailOrPhoneNumber: string,
+          fullName: string,
+          username: string,
+          password: string
+      }) => Promise<any>;
 }
 
-class SignUp extends React.Component<Props, State>{
-  state = {
-    username: '',
+class SignUp extends Component<Props, State> {
+  public state = {
     emailOrPhoneNumber: '',
-    fullName: '',
-    password: '',
     errors: [''],
-    numberOfErrors: 0,
-    showBtnInPasswordInput: false,
+    fullName: '',
     isShowingPassword: false,
-  }
+    numberOfErrors: 0,
+    password: '',
+    showBtnInPasswordInput: false,
+    username: '',
+  };
 
-  togglePassword = () => {
+  public togglePassword = () => {
     const passwordInput: any = document.getElementById('password');
 
     if (passwordInput.type === 'password') {
@@ -41,34 +49,20 @@ class SignUp extends React.Component<Props, State>{
     }
   }
 
-  submit = async (event: any): Promise<void> => {
+  public submit = async (event: any): Promise<void> => {
     event.preventDefault();
-
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
-    const postSettings =  {
-      method: 'POST',
-      body: new URLSearchParams({
-        emailOrPhoneNumber,
-        fullName,
-        username,
-        password,
-      }),
-    }
-
-    if(isValidPassword(password)){
-      const res = await fetch('/signUp', postSettings)
-      const json = await res.json()
-      //TODO handle protected routes from res JWT
-    } else {
-      console.log('FAILED');
-    }
+    const res = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
+    // tslint:disable-next-line
+    debugger;
+    const json = await res.json();
   }
 
-  handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  public handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
     const field = event.currentTarget.getAttribute('data-field');
 
-    switch(field){
+    switch (field) {
       case 'username':
         this.setState({ username: value });
         this.removeErrorImg(2);
@@ -79,9 +73,9 @@ class SignUp extends React.Component<Props, State>{
         break;
       case 'password':
         if (value) {
-          this.setState({ showBtnInPasswordInput: true, password: value })
+          this.setState({ showBtnInPasswordInput: true, password: value });
         } else {
-          this.setState({ showBtnInPasswordInput: false })
+          this.setState({ showBtnInPasswordInput: false });
         }
         this.removeErrorImg(3);
         break;
@@ -94,7 +88,7 @@ class SignUp extends React.Component<Props, State>{
     }
   }
 
-  targetErrors = (errorReport: Object): boolean => {
+  public targetErrors = (errorReport: object): boolean => {
     const errors = [];
     const inputs = Object.values(errorReport);
     let numberOfErrors = 0;
@@ -114,7 +108,7 @@ class SignUp extends React.Component<Props, State>{
     return true;
   }
 
-  removeErrorImg = (inputPosition: number): void => {
+  public removeErrorImg = (inputPosition: number): void => {
     if (this.state.errors.length) {
 
       this.setState((prevState) => {
@@ -126,17 +120,17 @@ class SignUp extends React.Component<Props, State>{
           updateNumberOfErrors--;
         }
 
-        return { errors: updatedErrors, numberOfErrors: updateNumberOfErrors }
+        return { errors: updatedErrors, numberOfErrors: updateNumberOfErrors };
       });
     }
   }
 
-  renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
+  public renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
 
-  displayErrorMessage = () => {
+  public displayErrorMessage = () => {
     const { numberOfErrors } = this.state;
     if (numberOfErrors > 1) {
-      return 'These fields are required.'
+      return 'These fields are required.';
     } else if (numberOfErrors === 1) {
       return 'This field is required.';
     } else {
@@ -144,22 +138,22 @@ class SignUp extends React.Component<Props, State>{
     }
   }
 
-  renderInputFields(){
+  public renderInputFields() {
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     const placeholders: any = {
-      'emailOrPhoneNumber': 'Mobile number or email',
-      'fullName': 'Full Name',
-      'username': 'Username',
-      'password': 'Password'
-    }
+      emailOrPhoneNumber: 'Mobile number or email',
+      fullName: 'Full Name',
+      password: 'Password',
+      username: 'Username',
+    };
 
     return (
       Object.keys(placeholders).map((field: string, idx: number) => (
         <div className='input-container' key={`key-${idx}`}>
           <input
             id={field}
-            key={field+idx}
-            type={field === 'password'? 'password' : 'text'}
+            key={field + idx}
+            type={field === 'password' ? 'password' : 'text'}
             className='sign-up-input'
             placeholder={placeholders[field]}
             onChange={this.handleFieldChange}
@@ -172,15 +166,17 @@ class SignUp extends React.Component<Props, State>{
           }
           {
             showBtnInPasswordInput && field === 'password'
-            ? <button className='show-hide-btn' onClick={this.togglePassword}> {isShowingPassword ? 'Hide' : 'Show'}</button>
+            ? <button className='show-hide-btn' onClick={this.togglePassword}>
+                    {isShowingPassword ? 'Hide' : 'Show'}
+              </button>
             : null
           }
         </div>
       ))
-    )
+    );
   }
 
-  render() {
+  public render() {
     const { toggleUserForm } = this.props;
     return (
       <>
@@ -199,7 +195,9 @@ class SignUp extends React.Component<Props, State>{
                 {this.displayErrorMessage()}
               </div>
               <div className='sign-up-bottom-paragraph-container'>
-                <p>By signing up, you agree to our <span>Terms</span> , <span>Data Policy</span> and <span>Cookies Policy</span>.</p>
+                <p> By signing up, you agree to our
+                    <span>Terms, Data Policy and Cookies Policy .</span>
+                </p>
               </div>
             </form>
           </div>
@@ -212,4 +210,4 @@ class SignUp extends React.Component<Props, State>{
   }
 }
 
-export default SignUp;
+export default connect(null, { signUp })(SignUp);
