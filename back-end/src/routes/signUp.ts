@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
-import express from 'express';
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import warnings from '../constants/warnings';
 import db from '../db';
 
@@ -14,7 +13,7 @@ router.post('/', (req: Request, res: Response): void => {
     const emailRep = 'email,';
     const phoneNumberRep = 'phone_number,';
     const q = 'INSERT INTO users(phone_number, email, full_name, username, password) VALUES($1, $2, $3, $4) RETURNING *;'
-     .replace(isEmailField ? phoneNumberRep : emailRep, ''); // If an email was provided remove the phone_number field and viceversa
+     .replace(isEmailField ? phoneNumberRep : emailRep, ''); // If an email was provided remove the phone_number field and vice versa
 
     const values = [
       emailOrPhoneNumber,
@@ -30,7 +29,7 @@ router.post('/', (req: Request, res: Response): void => {
       if (!user) {
         res.send({error: warnings.ACCOUNT_EXIST('username')});
       } else {
-        res.send({id : user.id, sucess: true});
+        res.send({id : user.id, success: true});
       }
     } catch (err) {
       res.send({ error: warnings.ACCOUNT_EXIST(err.detail)});
