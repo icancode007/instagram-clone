@@ -19,12 +19,8 @@ const App: React.FC = () => {
       <Router>
         <div className='App'>
           <Switch>
-            <Route exact path='/'>
-              <UserForm />
-            </Route>
-            <Route path='/myfeed'>
-              <MyFeed />
-            </Route>
+            <Route exact path='/' component={UserForm} />
+            <Route path='/myfeed' component={MyFeed} />
           </Switch>
         </div>
       </Router>

@@ -16,13 +16,7 @@ interface State {
 
 interface Props {
   toggleUserForm: () => void;
-  signUp: (
-      signUpReq: {
-          emailOrPhoneNumber: string,
-          fullName: string,
-          username: string,
-          password: string
-      }) => Promise<any>;
+  signUp: any;
 }
 
 class SignUp extends Component<Props, State> {
@@ -37,25 +31,10 @@ class SignUp extends Component<Props, State> {
     username: '',
   };
 
-  public togglePassword = () => {
-    const passwordInput: any = document.getElementById('password');
-
-    if (passwordInput.type === 'password') {
-      this.setState({ isShowingPassword: true });
-      passwordInput.type = 'text';
-    } else {
-      this.setState({ isShowingPassword: false });
-      passwordInput.type = 'password';
-    }
-  }
-
-  public submit = async (event: any): Promise<void> => {
+  public submit = (event: any): void => {
     event.preventDefault();
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
-    const res = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
-    // tslint:disable-next-line
-    debugger;
-    const json = await res.json();
+    this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
   }
 
   public handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -86,26 +65,6 @@ class SignUp extends Component<Props, State> {
       default:
         break;
     }
-  }
-
-  public targetErrors = (errorReport: object): boolean => {
-    const errors = [];
-    const inputs = Object.values(errorReport);
-    let numberOfErrors = 0;
-
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].error) {
-        errors[i] = `input-${i}`;
-        numberOfErrors++;
-      }
-    }
-
-    if (errors.length) {
-      this.setState({ errors, numberOfErrors });
-      return false;
-    }
-
-    return true;
   }
 
   public removeErrorImg = (inputPosition: number): void => {
@@ -166,7 +125,7 @@ class SignUp extends Component<Props, State> {
           }
           {
             showBtnInPasswordInput && field === 'password'
-            ? <button className='show-hide-btn' onClick={this.togglePassword}>
+            ? <button className='show-hide-btn'>
                     {isShowingPassword ? 'Hide' : 'Show'}
               </button>
             : null

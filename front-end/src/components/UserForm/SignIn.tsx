@@ -1,90 +1,68 @@
 import React, { Component } from 'react';
-import { isValidPassword } from '../../bll/authoringBll';
+import { connect } from 'react-redux';
+import { withRouter} from 'react-router';
+import { signIn } from '../../actions/authUser';
 
 export interface State {
-    isSubmitButtonEnable: boolean,
-    username: string,
-    password: string,
-    showBtnInPasswordInput: boolean,
-    isShowingPassword: boolean,
-    error: string
+    error: string;
+    isSubmitButtonEnable: boolean;
+    isShowingPassword: boolean;
+    showBtnInPasswordInput: boolean;
+    password: string;
+    username: string;
 }
 
 interface Props {
-  toggleUserForm: () => void
+  toggleUserForm: () => void;
+  signIn: any;
 }
 
-class SignIn extends Component<Props, State>{
-    state = {
+class SignIn extends Component<Props, State> {
+    public state = {
+        error: '',
+        isShowingPassword: false,
         isSubmitButtonEnable: false,
-        username: '',
         password: '',
         showBtnInPasswordInput: false,
-        isShowingPassword: false,
-        error: ''
+        username: '',
+    };
+
+    public handleUserNameChange = (event: { target: { value: string; }; }): void => {
+        this.setState({ username: event.target.value });
     }
 
-    handleUserNameChange = (event: { target: { value: string; }; }): void => {
-        this.setState({ username: event.target.value })
-    }
-
-    submit = async (event: React.FormEvent): Promise<void> => {
+    public submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
-
-        const { username, password } = this.state;
-
-       if (isValidPassword(password)) {
-          const postSettings = {
-            method: 'POST',
-            body: new URLSearchParams({
-              username, password
-            }),
-          }
-          await fetch('/signIn', postSettings);
-
-        } else {
-            // checks where is the error
-            if (username) {
-                // Then the password is invalid
-                this.setState({ error: 'password' })
-            } else {
-                this.setState({ error: 'username' })
-            }
-        }
     }
 
-    handlePasswordChange = (event: { target: { value: string } }): void => {
+    public handlePasswordChange = (event: { target: { value: string } }): void => {
         if (event.target.value) {
             this.setState({
-               showBtnInPasswordInput: true,
                password: event.target.value,
-              })
+               showBtnInPasswordInput: true,
+              });
         } else {
-            this.setState({ showBtnInPasswordInput: false })
+            this.setState({ showBtnInPasswordInput: false });
         }
     }
 
-    togglePassword = () => {
-        const passwordInput: any = document.getElementById('password');
-
-        if (passwordInput.type === 'password') {
-            this.setState({ isShowingPassword: true });
-            passwordInput.type = 'text';
-        } else {
-            this.setState({ isShowingPassword: false });
-            passwordInput.type = 'password';
-        }
-    }
-
-  render() {
+  public render() {
       const { toggleUserForm } = this.props;
       const { username, isShowingPassword, showBtnInPasswordInput, error } = this.state;
       let errorMessage;
 
       if (error === 'username') {
-          errorMessage = <div className='error-container'><span>The username you entered doesn't belong to an account.</span></div>;
+          errorMessage = (
+              <div className='error-container'>
+                  <span>The username you entered doesn't belong to an account.</span>
+              </div>
+          );
       } else if (error === 'password') {
-          errorMessage = <div className='error-container'><span>Sorry, your password was incorrect.</span></div>;
+          errorMessage = (
+              <div className='error-container'>
+                  <span>Sorry, your password was incorrect.</span>
+              </div>
+          );
       }
 
       return (
@@ -110,7 +88,7 @@ class SignIn extends Component<Props, State>{
                       />
                       {
                         showBtnInPasswordInput
-                        ? <button className='show-hide-btn' onClick={this.togglePassword}> {isShowingPassword ? 'Hide' : 'Show'}</button> :
+                        ? <button className='show-hide-btn'> {isShowingPassword ? 'Hide' : 'Show'}</button> :
                          null
                        }
                   </div>

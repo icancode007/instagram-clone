@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import './style.scss';
@@ -7,7 +7,7 @@ interface State {
   isSigningIn: boolean;
 }
 
-export default class Counter extends React.Component<object, State> {
+export default class UserForm extends Component <object, State> {
   public state = {
     isSigningIn: false
   };
