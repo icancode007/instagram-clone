@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter} from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { signIn } from '../../actions/authUser';
 
 export interface State {
@@ -12,7 +12,7 @@ export interface State {
     username: string;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
   signIn: any;
 }
@@ -109,4 +109,4 @@ class SignIn extends Component<Props, State> {
     }
 }
 
-export default SignIn;
+export default withRouter(connect(null, {signIn})(SignIn));
