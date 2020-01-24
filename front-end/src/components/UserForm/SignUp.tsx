@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { signUp } from '../../actions/authUser';
 import errorImg from './assets/error.png';
 
 interface State {
@@ -15,7 +12,7 @@ interface State {
   isShowingPassword: boolean;
 }
 
-interface Props extends RouteComponentProps {
+interface Props {
   toggleUserForm: () => void;
   signUp: any;
 }
@@ -170,4 +167,4 @@ class SignUp extends Component<Props, State> {
   }
 }
 
-export default withRouter(connect(null, {signUp})(SignUp));
+export default SignUp;

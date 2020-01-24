@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn, signUp } from '../../actions/authUser';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import './style.scss';
@@ -7,7 +9,12 @@ interface State {
   isSigningIn: boolean;
 }
 
-export default class UserForm extends Component <object, State> {
+interface Props {
+    signIn: any;
+    signUp: any;
+}
+
+class UserForm extends Component <Props, State> {
   public state = {
     isSigningIn: false
   };
@@ -20,8 +27,12 @@ export default class UserForm extends Component <object, State> {
 
   public render(): JSX.Element {
     const { isSigningIn } = this.state;
+    const { signIn: signInReq, signUp: signUpReq } = this.props;
+
     return isSigningIn
-      ? <SignIn toggleUserForm={this.toggleUserForm} />
-      : <SignUp toggleUserForm={this.toggleUserForm} />;
+      ? <SignIn  signIn={signInReq} toggleUserForm={this.toggleUserForm} />
+      : <SignUp  signUp={signUpReq} toggleUserForm={this.toggleUserForm} />;
   }
 }
+
+export default connect(null, {signIn, signUp})(UserForm);

@@ -1,18 +1,16 @@
-import { AUTH_USER } from './actionTypes';
-
 export function signUp(data) {
-  return dispatch => {
-      fetch( '/signUp', generatePostSettings(data) ).then(data => {
-         console.log("DATA", data);
-      });
+  return async (dispatch) => {
+      const req = await fetch( '/signUp', generatePostSettings(data));
+      const dataRes = req.json();
+      console.log(dataRes);
   }
 }
 
 export function signIn(data) {
-    return dispatch => {
-        fetch( '/signIn', generatePostSettings(data) ).then(data => {
-            console.log("DATA", data);
-        });
+    return async (dispatch) => {
+        const req = await fetch('/signIn', generatePostSettings(data));
+        const dataRes = req.json();
+        console.log(dataRes);
     }
 }
 

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { signIn } from '../../actions/authUser';
 
 export interface State {
     error: string;
@@ -12,7 +9,7 @@ export interface State {
     username: string;
 }
 
-interface Props extends RouteComponentProps {
+interface Props {
   toggleUserForm: () => void;
   signIn: any;
 }
@@ -33,6 +30,9 @@ class SignIn extends Component<Props, State> {
 
     public submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
+        const { username, password } = this.state;
+
+        this.props.signIn({username, password});
     }
 
     public handlePasswordChange = (event: { target: { value: string } }): void => {
@@ -109,4 +109,4 @@ class SignIn extends Component<Props, State> {
     }
 }
 
-export default withRouter(connect(null, {signIn})(SignIn));
+export default SignIn;
