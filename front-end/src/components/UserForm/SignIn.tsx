@@ -28,7 +28,7 @@ class SignIn extends Component<Props, State> {
         this.setState({ username: event.target.value });
     }
 
-    public submit = async (event: React.FormEvent): Promise<void> => {
+    public submit = (event: React.FormEvent): void => {
         event.preventDefault();
         const { username, password } = this.state;
 

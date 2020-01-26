@@ -1,7 +1,7 @@
 export function signUp(data) {
   return async (dispatch) => {
       const req = await fetch( '/signUp', generatePostSettings(data));
-      const dataRes = req.json();
+      const dataRes = await req.json();
       console.log(dataRes);
   }
 }
@@ -9,8 +9,9 @@ export function signUp(data) {
 export function signIn(data) {
     return async (dispatch) => {
         const req = await fetch('/signIn', generatePostSettings(data));
-        const dataRes = req.json();
-        console.log(dataRes);
+        const dataRes = await req.json();
+
+        localStorage.setItem('jwtToken', dataRes);
     }
 }
 
