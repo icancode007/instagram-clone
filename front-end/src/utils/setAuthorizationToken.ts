@@ -1,12 +1,12 @@
-const setAuthorizationToken = (token: string): object => {
-    let headers = {};
+import axios from 'axios';
+
+const setAuthorizationToken =  (token: string): void => {
     if (token) {
-        headers = {...headers, Authorization: `Bearer ${token}`};
+        // tslint:disable:no-string-literal
+        axios.defaults.headers.common['Authorization'] =  `Bearer ${token}`;
     } else {
-      /* tslint:disable: no-string-literal */
-      delete headers['Authorization'];
+        delete axios.defaults.headers.common['Authorization'];
     }
-    return headers;
 };
 
 export default setAuthorizationToken;

@@ -25,11 +25,10 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
     const queryResponse = await db.query(q, [loginHandle]);
     const retrievedUser = queryResponse.rows[0];
-
     if (!retrievedUser) {
        res.status(401).send( {error: warnings.USER_DOES_NOT_EXIST});
     } else {
-        if (bcrypt.compare(password, retrievedUser.password)) {
+        if (await bcrypt.compare(password, retrievedUser.password)) {
             const token = jwt.sign(
                 {
                     id: retrievedUser.id,
@@ -37,7 +36,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
                 }, config.jwtSecret);
             res.json(token);
         } else {
-            res.status(401).send({error: warnings.INCORRECT_PASSWORD});
+           await res.status(401).json({error: warnings.INCORRECT_PASSWORD});
         }
     }
 });
