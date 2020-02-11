@@ -1,0 +1,1 @@
+export type JWTDecoded = null |{ [key: string]: any } | string;

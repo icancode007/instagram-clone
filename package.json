@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
     "server": "(cd back-end && yarn start)",
