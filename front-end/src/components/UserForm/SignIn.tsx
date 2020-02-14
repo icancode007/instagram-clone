@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 export interface State {
     error: string;
@@ -9,7 +10,7 @@ export interface State {
     username: string;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
   signIn: any;
 }
@@ -28,11 +29,15 @@ class SignIn extends Component<Props, State> {
         this.setState({ username: event.target.value });
     }
 
-    public submit = (event: React.FormEvent): void => {
+    public submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         const { username, password } = this.state;
 
-        this.props.signIn({username, password});
+        const submitRes = await this.props.signIn({username, password});
+
+        if (!Object.prototype.hasOwnProperty('error') && submitRes) {
+            this.props.history.push(`/${username}`);
+        }
     }
 
     public handlePasswordChange = (event: { target: { value: string } }): void => {
@@ -109,4 +114,4 @@ class SignIn extends Component<Props, State> {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

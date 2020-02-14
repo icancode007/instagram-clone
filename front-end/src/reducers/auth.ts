@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { AnyAction } from 'redux';
 import { AUTH_USER } from '../actions/actionTypes';
 
@@ -10,7 +11,7 @@ export default (state = initialState, action: AnyAction) => {
  switch (action.type) {
     case AUTH_USER:
         return {
-            isAuthenticated: !(Object.entries(action.user).length === 0),
+            isAuthenticated: !isEmpty(action.user),
             user: action.user,
         };
     default:

@@ -7,7 +7,8 @@ import { JWTDecoded } from './types';
 
 export function signUp(data: URLSearchParams) {
   return async (dispatch: Dispatch) => {
-      const req = await axios.post( '/signUp', new URLSearchParams(data));
+      const reqResponse = await axios.post( '/signUp', new URLSearchParams(data));
+      return reqResponse;
   };
 }
 
@@ -20,8 +21,9 @@ export function signIn(data: URLSearchParams) {
             setAuthorizationToken(tkn);
             jwt.decode(tkn);
             dispatch(authenticateUser(jwt.decode(tkn)));
+            return tkn;
         } catch (e) {
-            return e.response.data;
+            return e;
         }
     };
 }

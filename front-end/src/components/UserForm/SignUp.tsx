@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import errorImg from './assets/error.png';
 
 interface State {
@@ -12,7 +13,7 @@ interface State {
   isShowingPassword: boolean;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
   signUp: any;
 }
@@ -29,10 +30,14 @@ class SignUp extends Component<Props, State> {
     username: '',
   };
 
-  public submit = (event: any): void => {
+  public submit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
-    this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
+    const submitRes = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
+
+    if (!Object.prototype.hasOwnProperty('error') && submitRes.data.success) {
+        this.props.history.push(`/${username}`);
+    }
   }
 
   public handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -167,4 +172,4 @@ class SignUp extends Component<Props, State> {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

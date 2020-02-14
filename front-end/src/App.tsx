@@ -33,12 +33,10 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Router>
-        <div className='App'>
           <Switch>
             <Route exact path='/' component={UserForm} />
-            <Route path='/myfeed' component={MyFeed} />
+            <Route exact path='/:user' component={MyFeed} />
           </Switch>
-        </div>
       </Router>
     </Provider>
   );
