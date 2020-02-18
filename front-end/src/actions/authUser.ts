@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import {AnyAction, Dispatch} from 'redux';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { AUTH_USER } from './actionTypes';
-import { JWTDecoded } from './types';
+import { JWTDecoded } from '../utils/types';
 
 export function signUp(data: URLSearchParams) {
   return async (dispatch: Dispatch) => {

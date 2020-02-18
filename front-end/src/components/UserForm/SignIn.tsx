@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RootState } from '../../utils/types';
 
 export interface State {
     error: string;
@@ -13,6 +15,7 @@ export interface State {
 interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
   signIn: any;
+  auth?: { isAuthenticated: boolean, user: object };
 }
 
 class SignIn extends Component<Props, State> {
@@ -24,6 +27,10 @@ class SignIn extends Component<Props, State> {
         showBtnInPasswordInput: false,
         username: '',
     };
+
+    public componentDidMount() {
+        // TODO: handle attempts to visit signIn when user is already logged in
+    }
 
     public handleUserNameChange = (event: { target: { value: string; }; }): void => {
         this.setState({ username: event.target.value });
@@ -114,4 +121,8 @@ class SignIn extends Component<Props, State> {
     }
 }
 
-export default withRouter(SignIn);
+const mapStateToProps = (state: RootState) => ({
+   auth: state.auth
+});
+
+export default withRouter(connect(mapStateToProps)(SignIn));
