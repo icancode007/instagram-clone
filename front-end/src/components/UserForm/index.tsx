@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {RouteComponentProps} from 'react-router';
 import { signIn, signUp } from '../../actions/authUser';
+import { RootState } from '../../utils/types';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import './style.scss';
@@ -9,15 +11,22 @@ interface State {
   isSigningIn: boolean;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
     signIn: any;
     signUp: any;
+    auth: { isAuthenticated: boolean, user: object };
 }
 
 class UserForm extends Component <Props, State> {
   public state = {
     isSigningIn: false
   };
+
+  public componentDidMount() {
+    if (!this.props.auth.isAuthenticated) {
+        this.props.history.push('/');
+    }
+  }
 
   public toggleUserForm = (): void => {
       this.setState(
@@ -35,4 +44,8 @@ class UserForm extends Component <Props, State> {
   }
 }
 
-export default connect(null, {signIn, signUp})(UserForm);
+const mapStateToProps = (state: RootState) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, {signIn, signUp})(UserForm);

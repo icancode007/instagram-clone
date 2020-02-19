@@ -15,7 +15,7 @@ export interface State {
 interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
   signIn: any;
-  auth?: { isAuthenticated: boolean, user: object };
+  auth: { isAuthenticated: boolean, user: { username: string, id: number} };
 }
 
 class SignIn extends Component<Props, State> {
@@ -29,7 +29,10 @@ class SignIn extends Component<Props, State> {
     };
 
     public componentDidMount() {
-        // TODO: handle attempts to visit signIn when user is already logged in
+        const { isAuthenticated, user: { username } }  = this.props.auth;
+        if (isAuthenticated) {
+            this.props.history.push(`/${username}`);
+        }
     }
 
     public handleUserNameChange = (event: { target: { value: string; }; }): void => {

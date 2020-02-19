@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {RouteComponentProps} from 'react-router';
+import { RootState } from '../../utils/types';
 
-const MyFeed = () => (
-  <>
-    <h1> My Feed </h1>
-  </>
-)
+interface Props extends RouteComponentProps {
+    auth: { isAuthenticated: boolean, user: object };
+}
 
-export default MyFeed;
+class MyFeed extends Component <Props> {
+
+   public componentDidMount() {
+       if (!this.props.auth.isAuthenticated) {
+           this.props.history.push('/');
+       }
+   }
+
+   public render() {
+        return (
+            <>
+                <h1> My Feed </h1>
+            </>
+        );
+    }
+}
+
+const mapStateToProps = (state: RootState) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(MyFeed);
