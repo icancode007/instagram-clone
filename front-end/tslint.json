@@ -7,7 +7,11 @@
     "rules": {
         "trailing-comma": [ false ],
         "quotemark": [ true, "single" ],
-        "interface-name": false
+        "interface-name": false,
+        "object-curly-spacing": [2, "always", {
+            "objectsInObjects": true,
+            "arraysInObjects": false
+        }]
     },
     "rulesDirectory": []
 }

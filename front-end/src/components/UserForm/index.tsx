@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {RouteComponentProps} from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { signIn, signUp } from '../../actions/authUser';
 import { RootState } from '../../utils/types';
 import SignIn from './SignIn';

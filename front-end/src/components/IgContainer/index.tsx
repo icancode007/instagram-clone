@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../../utils/types';
 import Footer from '../Footer';
 import Nav from '../Nav';
+import './style.scss';
 
 interface Props {
     children: any;
@@ -13,11 +14,13 @@ class IgContainer extends Component<Props> {
     public render() {
         const { isAuthenticated } = this.props.auth;
         return(
-            <>
+            <div className='igContainer'>
                 {isAuthenticated && <Nav/>}
-                {this.props.children}
+                <div>
+                    {this.props.children}
+                </div>
                 <Footer />
-            </>
+            </div>
         );
     }
 }
