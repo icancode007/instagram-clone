@@ -9,13 +9,13 @@ interface Props extends RouteComponentProps {
 
 class MyFeed extends Component <Props> {
 
-   public componentDidMount() {
+    componentDidMount() {
        if (!this.props.auth.isAuthenticated) {
            this.props.history.push('/');
        }
    }
 
-   public render() {
+    render() {
         return (
             <>
                 <h1> My Feed </h1>

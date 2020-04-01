@@ -18,23 +18,23 @@ interface Props extends RouteComponentProps {
 }
 
 class UserForm extends Component <Props, State> {
-  public state = {
+   state = {
     isSigningIn: false
   };
 
-  public componentDidMount() {
+   componentDidMount() {
     if (!this.props.auth.isAuthenticated) {
         this.props.history.push('/');
     }
   }
 
-  public toggleUserForm = (): void => {
+   toggleUserForm = (): void => {
       this.setState(
         (prevState: State) => this.setState({isSigningIn: !prevState.isSigningIn})
       );
   }
 
-  public render(): JSX.Element {
+   render(): JSX.Element {
     const { isSigningIn } = this.state;
     const { signIn: signInReq, signUp: signUpReq } = this.props;
 

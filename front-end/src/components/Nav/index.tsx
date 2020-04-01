@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { navBrand, navCompas, navHeart, navIcon, navProfile, searchIcon} from './assets';
 import './style.scss';
 class Nav extends Component {
- public render() {
+  render() {
    return (
            <div className='nav-wrapper'>
                 <nav>

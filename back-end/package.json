@@ -24,7 +24,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "new-package": "^0.1.0",
-    "pg": "^7.12.1"
+    "pg": "^7.12.1",
+    "tslint": "^6.1.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -40,7 +41,6 @@
     "jest": "^24.8.0",
     "nodemon": "^1.19.4",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   }
 }

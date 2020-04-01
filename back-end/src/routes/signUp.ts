@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import express, { Request, Response } from 'express';
 import warnings from '../constants/warnings';
 import db from '../db';
+
+const { ACCOUNT_EXIST } = warnings;
+
 const router = express.Router();
 
 router.post('/', (req: Request, res: Response): void => {
@@ -26,12 +29,12 @@ router.post('/', (req: Request, res: Response): void => {
       const user = result.rows[0];
 
       if (!user) {
-        res.status(401).json({error: warnings.ACCOUNT_EXIST('username')});
+        res.status(401).json({ error: ACCOUNT_EXIST('username') });
       } else {
-        res.json({id : user.id, success: true});
+        res.json({ id : user.id, success: true });
       }
     } catch (err) {
-      res.json({ error: warnings.ACCOUNT_EXIST(err.detail)});
+      res.json({ error: ACCOUNT_EXIST(err.detail) });
     }
   });
 });

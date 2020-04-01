@@ -19,7 +19,7 @@ interface Props extends RouteComponentProps {
 }
 
 class SignIn extends Component<Props, State> {
-    public state = {
+     state = {
         error: '',
         isShowingPassword: false,
         isSubmitButtonEnable: false,
@@ -28,18 +28,18 @@ class SignIn extends Component<Props, State> {
         username: '',
     };
 
-    public componentDidMount() {
+     componentDidMount() {
         const { isAuthenticated, user: { username } }  = this.props.auth;
         if (isAuthenticated) {
             this.props.history.push(`/${username}`);
         }
     }
 
-    public handleUserNameChange = (event: { target: { value: string; }; }): void => {
+     handleUserNameChange = (event: { target: { value: string; }; }): void => {
         this.setState({ username: event.target.value });
     }
 
-    public submit = async (event: React.FormEvent): Promise<void> => {
+     submit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         const { username, password } = this.state;
 
@@ -50,7 +50,7 @@ class SignIn extends Component<Props, State> {
         }
     }
 
-    public handlePasswordChange = (event: { target: { value: string } }): void => {
+     handlePasswordChange = (event: { target: { value: string } }): void => {
         if (event.target.value) {
             this.setState({
                password: event.target.value,
@@ -61,7 +61,7 @@ class SignIn extends Component<Props, State> {
         }
     }
 
-  public render() {
+   render() {
       const { toggleUserForm } = this.props;
       const { username, isShowingPassword, showBtnInPasswordInput, error } = this.state;
       let errorMessage;

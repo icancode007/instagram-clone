@@ -7,29 +7,29 @@ import { AUTH_USER } from './actionTypes';
 
 export function signUp(data: URLSearchParams) {
   return async () => {
-      return await axios.post( '/signUp', new URLSearchParams(data));;
+    await axios.post( '/signUp', new URLSearchParams(data));
   };
 }
 
 export function signIn(data: URLSearchParams) {
-    return async (dispatch: Dispatch) => {
-        try {
-            const req = await axios.post('/signIn', new URLSearchParams(data));
-            const tkn = req.data;
-            localStorage.setItem('jwtToken', tkn);
-            setAuthorizationToken(tkn);
-            jwt.decode(tkn);
-            dispatch(authenticateUser(jwt.decode(tkn)));
-            return tkn;
-        } catch (e) {
-            return e;
-        }
-    };
+  return async (dispatch: Dispatch) => {
+    try {
+      const req = await axios.post('/signIn', new URLSearchParams(data));
+      const tkn = req.data;
+      localStorage.setItem('jwtToken', tkn);
+      setAuthorizationToken(tkn);
+      jwt.decode(tkn);
+      dispatch(authenticateUser(jwt.decode(tkn)));
+      return tkn;
+    } catch (e) {
+      return e;
+    }
+ };
 }
 
 export function authenticateUser(user: JWTDecoded): AnyAction {
-    return {
-      type: AUTH_USER,
-      user
-    };
+  return {
+    type: AUTH_USER,
+    user
+} ;
 }

@@ -7,17 +7,20 @@ import db from '../db';
 
 import { getUserLoginOrSigninMethod, UserBy } from '../helpers';
 
+const { USERNAME, EMAIL, PHONE_NUMBER } = UserBy;
+const { INCORRECT_PASSWORD, USER_DOES_NOT_EXIST } = warnings;
+
 const router = express.Router();
 
 router.post('/', async (req: Request, res: Response): Promise<void> => {
     const {username: loginHandle, password} = req.body;
     let q = 'SELECT * FROM users WHERE username = $1;';
     switch (getUserLoginOrSigninMethod(loginHandle)) {
-        case UserBy.EMAIL:
-            q = q.replace(UserBy.USERNAME, UserBy.EMAIL);
+        case EMAIL:
+            q = q.replace(USERNAME, EMAIL);
             break;
-        case UserBy.PHONE_NUMBER:
-            q = q.replace(UserBy.USERNAME, UserBy.PHONE_NUMBER);
+        case PHONE_NUMBER:
+            q = q.replace(USERNAME, PHONE_NUMBER);
             break;
         default:
             break;
@@ -26,7 +29,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     const queryResponse = await db.query(q, [loginHandle]);
     const retrievedUser = queryResponse.rows[0];
     if (!retrievedUser) {
-       res.status(401).send( {error: warnings.USER_DOES_NOT_EXIST});
+       res.status(401).send( {error: USER_DOES_NOT_EXIST});
     } else {
         if (await bcrypt.compare(password, retrievedUser.password)) {
             const token = jwt.sign(
@@ -36,7 +39,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
                 }, config.jwtSecret);
             res.json(token);
         } else {
-           await res.status(401).json({error: warnings.INCORRECT_PASSWORD});
+           await res.status(401).json({ error: INCORRECT_PASSWORD });
         }
     }
 });

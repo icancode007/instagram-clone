@@ -19,7 +19,7 @@ interface Props extends RouteComponentProps {
 }
 
 class SignUp extends Component<Props, State> {
-  public state = {
+   state = {
     emailOrPhoneNumber: '',
     errors: [''],
     fullName: '',
@@ -30,7 +30,7 @@ class SignUp extends Component<Props, State> {
     username: '',
   };
 
-  public submit = async (event: React.FormEvent): Promise<void> => {
+   submit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
     const submitRes = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
@@ -40,7 +40,7 @@ class SignUp extends Component<Props, State> {
     }
   }
 
-  public handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
+   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
     const field = event.currentTarget.getAttribute('data-field');
 
@@ -70,7 +70,7 @@ class SignUp extends Component<Props, State> {
     }
   }
 
-  public removeErrorImg = (inputPosition: number): void => {
+   removeErrorImg = (inputPosition: number): void => {
     if (this.state.errors.length) {
 
       this.setState((prevState) => {
@@ -87,9 +87,9 @@ class SignUp extends Component<Props, State> {
     }
   }
 
-  public renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
+   renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
 
-  public displayErrorMessage = () => {
+   displayErrorMessage = () => {
     const { numberOfErrors } = this.state;
     if (numberOfErrors > 1) {
       return 'These fields are required.';
@@ -100,7 +100,7 @@ class SignUp extends Component<Props, State> {
     }
   }
 
-  public renderInputFields() {
+   renderInputFields() {
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     const placeholders: any = {
       emailOrPhoneNumber: 'Mobile number or email',
@@ -138,7 +138,7 @@ class SignUp extends Component<Props, State> {
     );
   }
 
-  public render() {
+   render() {
     const { toggleUserForm } = this.props;
     return (
       <>

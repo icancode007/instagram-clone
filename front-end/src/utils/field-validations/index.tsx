@@ -1,7 +1,3 @@
-export const login = (user: object) => {
-  // move logic for login/signIn fetch here
-};
-
 export const isValidPhoneNumber = (input: string): boolean => {
   let cleanedInput = '';
 
@@ -10,7 +6,7 @@ export const isValidPhoneNumber = (input: string): boolean => {
   }
 
   for (const i of input) {
-    if (/^\d+$/.test(i)){
+    if (/^\d+$/.test(i)) {
         cleanedInput += i;
     }
   }

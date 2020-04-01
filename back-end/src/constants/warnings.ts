@@ -8,10 +8,10 @@ const warnings = {
     const rearHandleIdx = frontHandle.search('[\)]'); // idx where substring slice should finish
     const handle = frontHandle.slice(0, rearHandleIdx);
 
-    const strModel = `An account with ${handle} as a username already exists`;
+    const strModel = `An account with ${handle} as an username already exists`;
     switch (getUserLoginOrSigninMethod(handle)) {
       case UserBy.EMAIL:
-        return strModel.replace('a username', 'an email');
+        return strModel.replace('an username', 'an email');
       case UserBy.PHONE_NUMBER:
        return strModel.replace('username', 'Phone Number');
       default:

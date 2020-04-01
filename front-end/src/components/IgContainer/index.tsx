@@ -11,13 +11,13 @@ interface Props {
 }
 
 class IgContainer extends Component<Props> {
-    public render() {
+     render() {
         const { isAuthenticated } = this.props.auth;
         return(
             <div className='igContainer'>
-                {isAuthenticated && <Nav/>}
+                { isAuthenticated && <Nav /> }
                 <div>
-                    {this.props.children}
+                    { this.props.children }
                 </div>
                 <Footer />
             </div>
