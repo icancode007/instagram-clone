@@ -31,7 +31,13 @@ if (localStorage.jwtToken) {
 }
 
 const App: React.FC = () => {
-  return (
+    const { user, isAuthenticated } = store.getState().auth;
+
+    if (isAuthenticated && window.location.pathname === '/') {
+        window.location.href = `/${user.username}`;
+    }
+
+    return (
     <Provider store={store}>
         <IgContainer>
           <Router>
