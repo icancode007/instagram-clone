@@ -35,7 +35,8 @@ class SignUp extends Component<Props, State> {
     const { emailOrPhoneNumber, fullName, username, password, } = this.state;
     const submitRes = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
 
-    if (!Object.prototype.hasOwnProperty('error') && submitRes.data.success) {
+    if (!Object.prototype.hasOwnProperty('error') && submitRes.data) {
+      console.log('DATA', submitRes.data)
         this.props.history.push(`/${username}`);
     }
   }

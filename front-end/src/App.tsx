@@ -30,25 +30,16 @@ if (localStorage.jwtToken) {
     store.dispatch(authenticateUser(jwt.decode(localStorage.jwtToken)));
 }
 
-const App: React.FC = () => {
-    const { user, isAuthenticated } = store.getState().auth;
-
-    if (isAuthenticated && window.location.pathname === '/') {
-        window.location.href = `/${user.username}`;
-    }
-
-    return (
-    <Provider store={store}>
-        <IgContainer>
-          <Router>
-              <Switch>
-                <Route exact path='/' component={UserForm} />
-                <Route exact path='/:user' component={MyFeed} />
-              </Switch>
-          </Router>
-        </IgContainer>
-    </Provider>
-  );
-};
-
+const App: React.FC = () => (
+  <Provider store={store}>
+    <IgContainer>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={UserForm} />
+          <Route exact path='/:user' component={MyFeed} />
+        </Switch>
+      </Router>
+    </IgContainer>
+  </Provider>
+);
 export default App;

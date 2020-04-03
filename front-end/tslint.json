@@ -1,22 +1,23 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+      "tslint:recommended",
+      "tslint-config-prettier"
     ],
     "jsRules": {},
     "rules": {
-        "trailing-comma": [ false ],
-        "interface-name": [ false ],
-        "variable-name": ["allow-snake-case"],
-        "quotemark": [ true, "single" ],
-        "member-access": false,
-        "object-curly-spacing": [2, "always", {
-            "objectsInObjects": true,
-            "arraysInObjects": false
-        }],
-        "max-line-length": [false],
-        "no-debugger": false,
-        "no-console": [false]
+      "trailing-comma": [ false ],
+      "interface-name": [ false ],
+      "variable-name": ["allow-snake-case"],
+      "quotemark": [ true, "single" ],
+      "member-access": false,
+      "object-curly-spacing": [2, "always", {
+          "objectsInObjects": true,
+          "arraysInObjects": false
+      }],
+      "max-line-length": [ false ],
+      "no-debugger": false,
+      "no-console": [ false ]
     },
     "rulesDirectory": []
 }

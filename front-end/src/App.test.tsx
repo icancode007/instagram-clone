@@ -9,6 +9,6 @@ import jest from 'jest';
 //   ReactDOM.unmountComponentAtNode(div);
 // });
 
-it("does something", ()=>{
+it('does something', ()=>{
    expect(1).toEqual(1);
 })

@@ -14,7 +14,7 @@ interface State {
 interface Props extends RouteComponentProps {
     signIn: any;
     signUp: any;
-    auth: { isAuthenticated: boolean, user: object };
+    auth: { isAuthenticated: boolean, user: { username: string, id: number } };
 }
 
 class UserForm extends Component <Props, State> {
@@ -23,9 +23,12 @@ class UserForm extends Component <Props, State> {
   };
 
    componentDidMount() {
-    if (!this.props.auth.isAuthenticated) {
-        this.props.history.push('/');
-    }
+     const { user, isAuthenticated } = this.props.auth;
+
+     if (isAuthenticated && window.location.pathname === '/') {
+       window.location.href = `/${user.username}`;
+       return;
+     }
   }
 
    toggleUserForm = (): void => {
@@ -36,7 +39,11 @@ class UserForm extends Component <Props, State> {
 
    render(): JSX.Element {
     const { isSigningIn } = this.state;
-    const { signIn: signInReq, signUp: signUpReq } = this.props;
+    const { signIn: signInReq, signUp: signUpReq, auth } = this.props;
+
+    if(auth.isAuthenticated) {
+      return <>...Loading</>
+    }
 
     return isSigningIn
       ? <SignIn  signIn={signInReq} toggleUserForm={this.toggleUserForm} />

@@ -8,7 +8,7 @@ const Mocks = {
     toggleUserForm: jest.fn()
 }
 
-describe("Checks if the sate is being set correctly", () => {
+describe('Checks if the sate is being set correctly', () => {
 
     beforeAll(() => {
         const wrapper = shallow(<SignIn toggleUserForm={Mocks.toggleUserForm} />);
