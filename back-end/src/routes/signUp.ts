@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import config from '../config';
 import warnings from '../constants/warnings';
 import db from '../db';
 
@@ -31,7 +33,12 @@ router.post('/', (req: Request, res: Response): void => {
       if (!user) {
         res.status(401).json({ error: ACCOUNT_EXIST('username') });
       } else {
-        res.json({ id : user.id, success: true });
+        const token = jwt.sign(
+          {
+            id: user.id,
+            username: user.username
+          }, config.jwtSecret);
+        res.json(token);
       }
     } catch (err) {
       res.json({ error: ACCOUNT_EXIST(err.detail) });
