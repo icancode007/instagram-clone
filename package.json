@@ -1,12 +1,13 @@
 {
   "dependencies": {
-    "concurrently": "^5.0.0",
-    "jsonwebtoken": "^8.5.1",
-    "tslint": "^6.1.0"
+    "concurrently": "^5.0.0"
   },
   "scripts": {
     "server": "(cd back-end && yarn start)",
     "client": "(cd front-end && yarn start)",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server-lint": "(cd back-end && yarn lint:fix)",
+    "client-lint": "(cd front-end && yarn lint:fix)",
+    "lint:fix": "concurrently \"npm run server-lint\" \"npm run client-lint\""
   }
 }
