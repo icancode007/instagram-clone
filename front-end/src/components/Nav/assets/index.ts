@@ -5,11 +5,4 @@ import navIcon from './ig-nav-icon.png';
 import navProfile from './ig-nav-profile.png';
 import searchIcon from './nav-input-search.png';
 
-export {
-    navBrand,
-    navCompas,
-    navHeart,
-    navIcon,
-    navProfile,
-    searchIcon
-};
+export { navBrand, navCompas, navHeart, navIcon, navProfile, searchIcon };

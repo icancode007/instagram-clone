@@ -1,0 +1,58 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "."
+  },
+  "env": {
+    "browser": true,
+    "jest/globals": true
+  },
+  "plugins": ["@typescript-eslint", "react-hooks", "jest", "prettier"],
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier/react"
+  ],
+  "rules": {
+    "react/state-in-constructor": [2, "never"], // we are more advanced not needed anymore :P
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": ["error",  {"devDependencies": true}],
+    "react/jsx-props-no-spreading": "off",
+    "react/no-unescaped-entities": "off",
+    "react/no-array-index-key": "off",
+    "react/destructuring-assignment": "off",
+    "import/named": "off",
+    "import/export": "off",
+    "import/prefer-default-export": "off", // Allow single Named-export,
+    "no-unused-expressions": ["warn", {
+      "allowShortCircuit": true,
+      "allowTernary": true
+    }], // https://eslint.org/docs/rules/no-unused-expressions
+    "@typescript-eslint/prefer-interface": "off", // also want to use "type"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/jsx-filename-extension": ["warn", {
+      "extensions": [".tsx", "ts"]
+    }],
+    "react-hooks/rules-of-hooks": "error",
+    "no-array-index-key": "off",
+    "prettier/prettier": [
+      "error", {
+        "singleQuote": true,
+        "jsxSingleQuote": true,
+        "semi": true
+      }
+    ]
+  }
+}

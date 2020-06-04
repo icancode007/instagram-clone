@@ -12,47 +12,48 @@ interface State {
 }
 
 interface Props extends RouteComponentProps {
-    signIn: any;
-    signUp: any;
-    auth: { isAuthenticated: boolean, user: { username: string, id: number } };
+  signIn: Function;
+  signUp: Function;
+  auth: { isAuthenticated: boolean; user: { username: string; id: number } };
 }
 
-class UserForm extends Component <Props, State> {
-   state = {
-    isSigningIn: false
+class UserForm extends Component<Props, State> {
+  state = {
+    isSigningIn: false,
   };
 
-   componentDidMount() {
-     const { user, isAuthenticated } = this.props.auth;
+  componentDidMount() {
+    const { user, isAuthenticated } = this.props.auth;
 
-     if (isAuthenticated && window.location.pathname === '/') {
-       window.location.href = `/${user.username}`;
-       return;
-     }
+    if (isAuthenticated && window.location.pathname === '/') {
+      window.location.href = `/${user.username}`;
+    }
   }
 
-   toggleUserForm = (): void => {
-      this.setState(
-        (prevState: State) => this.setState({isSigningIn: !prevState.isSigningIn})
-      );
-  }
+  toggleUserForm = (): void => {
+    this.setState((prevState: State) => ({
+      isSigningIn: !prevState.isSigningIn,
+    }));
+  };
 
-   render(): JSX.Element {
+  render(): JSX.Element {
     const { isSigningIn } = this.state;
     const { signIn: signInReq, signUp: signUpReq, auth } = this.props;
 
-    if(auth.isAuthenticated) {
-      return <>...Loading</>
+    if (auth.isAuthenticated) {
+      return <>...Loading</>;
     }
 
-    return isSigningIn
-      ? <SignIn  signIn={signInReq} toggleUserForm={this.toggleUserForm} />
-      : <SignUp  signUp={signUpReq} toggleUserForm={this.toggleUserForm} />;
+    return isSigningIn ? (
+      <SignIn signIn={signInReq} toggleUserForm={this.toggleUserForm} />
+    ) : (
+      <SignUp signUp={signUpReq} toggleUserForm={this.toggleUserForm} />
+    );
   }
 }
 
 const mapStateToProps = (state: RootState) => ({
-    auth: state.auth
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, {signIn, signUp})(UserForm);
+export default connect(mapStateToProps, { signIn, signUp })(UserForm);

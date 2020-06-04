@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import errorImg from './assets/error.png';
+// import errorImg from '../../../../public/error.png';
 
 interface State {
   username: string;
@@ -15,11 +15,11 @@ interface State {
 
 interface Props extends RouteComponentProps {
   toggleUserForm: () => void;
-  signUp: any;
+  signUp: Function;
 }
 
 class SignUp extends Component<Props, State> {
-   state = {
+  state = {
     emailOrPhoneNumber: '',
     errors: [''],
     fullName: '',
@@ -30,117 +30,126 @@ class SignUp extends Component<Props, State> {
     username: '',
   };
 
-   submit = async (event: React.FormEvent): Promise<void> => {
+  submit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
-    const { emailOrPhoneNumber, fullName, username, password, } = this.state;
-    const submitRes = await this.props.signUp({ emailOrPhoneNumber, fullName, username, password });
+    const { emailOrPhoneNumber, fullName, username, password } = this.state;
+    const { signUp, history } = this.props;
 
-    if (!Object.prototype.hasOwnProperty('error') && submitRes.data) {
-      console.log('DATA', submitRes.data)
-        this.props.history.push(`/${username}`);
+    const submitRes = await signUp({
+      emailOrPhoneNumber,
+      fullName,
+      username,
+      password,
+    });
+
+    if (!submitRes.error && submitRes.data) {
+      history.push(`/${username}`);
     }
-  }
+  };
 
-   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
     const field = event.currentTarget.getAttribute('data-field');
+    const { setState, removeErrorImg } = this;
 
     switch (field) {
       case 'username':
-        this.setState({ username: value });
-        this.removeErrorImg(2);
+        setState({ username: value });
+        removeErrorImg(2);
         break;
       case 'emailOrPhoneNumber':
-        this.setState({ emailOrPhoneNumber: value });
-        this.removeErrorImg(0);
+        setState({ emailOrPhoneNumber: value });
+        removeErrorImg(0);
         break;
       case 'password':
         if (value) {
-          this.setState({ showBtnInPasswordInput: true, password: value });
+          setState({ showBtnInPasswordInput: true, password: value });
         } else {
-          this.setState({ showBtnInPasswordInput: false });
+          setState({ showBtnInPasswordInput: false });
         }
-        this.removeErrorImg(3);
+        removeErrorImg(3);
         break;
       case 'fullName':
-        this.setState({ fullName: value });
-        this.removeErrorImg(1);
+        setState({ fullName: value });
+        removeErrorImg(1);
         break;
       default:
         break;
     }
-  }
+  };
 
-   removeErrorImg = (inputPosition: number): void => {
-    if (this.state.errors.length) {
+  removeErrorImg = (inputPosition: number): void => {
+    const { errors } = this.state;
 
+    if (errors.length) {
       this.setState((prevState) => {
         const updatedErrors = prevState.errors;
         let updateNumberOfErrors = prevState.numberOfErrors;
 
         if (updatedErrors[inputPosition]) {
           updatedErrors[inputPosition] = '';
-          updateNumberOfErrors--;
+          updateNumberOfErrors -= 1;
         }
 
         return { errors: updatedErrors, numberOfErrors: updateNumberOfErrors };
       });
     }
-  }
+  };
 
-   renderInputWithError = (searchTerm: string): boolean => this.state.errors.includes(searchTerm);
+  renderInputWithError = (searchTerm: string): boolean => {
+    const { errors } = this.state;
+    return errors.includes(searchTerm);
+  };
 
-   displayErrorMessage = () => {
+  displayErrorMessage = () => {
     const { numberOfErrors } = this.state;
     if (numberOfErrors > 1) {
       return 'These fields are required.';
-    } else if (numberOfErrors === 1) {
-      return 'This field is required.';
-    } else {
-      return null;
     }
-  }
+    if (numberOfErrors === 1) {
+      return 'This field is required.';
+    }
+    return null;
+  };
 
-   renderInputFields() {
+  renderInputFields() {
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
-    const placeholders: any = {
+    const placeholders: { [key: string]: string } = {
       emailOrPhoneNumber: 'Mobile number or email',
       fullName: 'Full Name',
       password: 'Password',
       username: 'Username',
     };
 
-    return (
-      Object.keys(placeholders).map((field: string, idx: number) => (
-        <div className='input-container' key={`key-${idx}`}>
-          <input
-            id={field}
-            key={field + idx}
-            type={field === 'password' ? 'password' : 'text'}
-            className='sign-up-input'
-            placeholder={placeholders[field]}
-            onChange={this.handleFieldChange}
-            data-field={field}
-          />
-          {
-            this.renderInputWithError(`input-${idx}`)
-            ? <img className='error-image' src={errorImg} alt='error' />
-            : null
-          }
-          {
-            showBtnInPasswordInput && field === 'password'
-            ? <button className='show-hide-btn'>
-                    {isShowingPassword ? 'Hide' : 'Show'}
-              </button>
-            : null
-          }
-        </div>
-      ))
-    );
+    return Object.keys(placeholders).map((field: string, idx: number) => (
+      <div className='input-container' key={`key-${idx}`}>
+        <input
+          id={field}
+          key={field + idx}
+          type={field === 'password' ? 'password' : 'text'}
+          className='sign-up-input'
+          placeholder={placeholders[field]}
+          onChange={this.handleFieldChange}
+          data-field={field}
+        />
+        {this.renderInputWithError(`input-${idx}`) ? (
+          <span> error </span> //{<img className='error-image' src={errorImg} alt='error' />}
+        ) : null}
+        {showBtnInPasswordInput && field === 'password' ? (
+          <button className='show-hide-btn' type='button'>
+            {isShowingPassword ? 'Hide' : 'Show'}
+          </button>
+        ) : null}
+      </div>
+    ));
   }
 
-   render() {
-    const { toggleUserForm } = this.props;
+  render() {
+    const {
+      props: { toggleUserForm },
+      renderInputFields,
+      displayErrorMessage,
+    } = this;
     return (
       <>
         <div className='form-container sign-up'>
@@ -149,24 +158,36 @@ class SignUp extends Component<Props, State> {
             <p>Sign up to see photos and videos from your friends.</p>
           </div>
           <div>
-            <form onSubmit={this.submit} >
-                {this.renderInputFields()}
+            <form onSubmit={this.submit}>
+              {renderInputFields()}
               <div className='submit-container'>
-                <input type='submit' className='submit-button' value='Sign Up' />
+                <input
+                  type='submit'
+                  className='submit-button'
+                  value='Sign Up'
+                />
               </div>
-              <div className='error-container'>
-                {this.displayErrorMessage()}
-              </div>
+              <div className='error-container'>{displayErrorMessage()}</div>
               <div className='sign-up-bottom-paragraph-container'>
-                <p> By signing up, you agree to our
-                    <span>Terms, Data Policy and Cookies Policy .</span>
+                <p>
+                  By signing up, you agree to our
+                  <span>Terms, Data Policy and Cookies Policy .</span>
                 </p>
               </div>
             </form>
           </div>
         </div>
         <div className='form-container'>
-          <p>Have an account? <button onClick={toggleUserForm} className='footer-btn'>Log In</button></p>
+          <p>
+            Have an account?
+            <button
+              type='button'
+              onClick={toggleUserForm}
+              className='footer-btn'
+            >
+              Log In
+            </button>
+          </p>
         </div>
       </>
     );

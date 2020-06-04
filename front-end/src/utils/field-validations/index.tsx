@@ -5,11 +5,11 @@ export const isValidPhoneNumber = (input: string): boolean => {
     return true;
   }
 
-  for (const i of input) {
-    if (/^\d+$/.test(i)) {
-        cleanedInput += i;
+  input.split('').forEach((c: string) => {
+    if (/^\d+$/.test(c)) {
+      cleanedInput += c;
     }
-  }
+  });
 
   if (/^\d+$/.test(cleanedInput) && cleanedInput.length === 10) {
     return true;
@@ -28,11 +28,7 @@ export const isValidUserName = (input: string): boolean => {
   if (!input.length) {
     return false;
   }
-
-  for (const i of input) {
-    if (!(/^[a-zA-Z0-9]+$/.test(i))) { return false; }
-  }
-  return true;
+  return input.split('').some((c: string) => /^[a-zA-Z0-9]+$/.test(c));
 };
 
 export const isValidPassword = (input: string): boolean => {

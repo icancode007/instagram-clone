@@ -5,10 +5,17 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { JWTDecoded } from '../utils/types';
 import { AUTH_USER } from './actionTypes';
 
+export function authenticateUser(user: JWTDecoded): AnyAction {
+  return {
+    type: AUTH_USER,
+    user,
+  };
+}
+
 export function signUp(data: URLSearchParams) {
   return async (dispatch: Dispatch) => {
     try {
-      const req = await axios.post( '/signUp', new URLSearchParams(data));
+      const req = await axios.post('/signUp', new URLSearchParams(data));
       const tkn = req.data;
       localStorage.setItem('jwtToken', tkn);
       setAuthorizationToken(tkn);
@@ -33,11 +40,4 @@ export function signIn(data: URLSearchParams) {
       return e;
     }
   };
-}
-
-export function authenticateUser(user: JWTDecoded): AnyAction {
-  return {
-    type: AUTH_USER,
-    user
-  } ;
 }
