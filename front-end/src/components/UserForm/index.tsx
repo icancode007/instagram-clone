@@ -18,7 +18,7 @@ interface Props extends RouteComponentProps {
 }
 
 class UserForm extends Component<Props, State> {
-  state = {
+  state: State = {
     isSigningIn: false,
   };
 

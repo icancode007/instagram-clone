@@ -19,15 +19,15 @@ interface Props extends RouteComponentProps {
 }
 
 class SignUp extends Component<Props, State> {
-  state = {
-    emailOrPhoneNumber: '',
-    errors: [''],
-    fullName: '',
-    isShowingPassword: false,
-    numberOfErrors: 0,
-    password: '',
-    showBtnInPasswordInput: false,
+  state: State = {
     username: '',
+    emailOrPhoneNumber: '',
+    password: '',
+    fullName: '',
+    errors: [''],
+    numberOfErrors: 0,
+    showBtnInPasswordInput: false,
+    isShowingPassword: false,
   };
 
   submit = async (event: React.FormEvent): Promise<void> => {
@@ -50,28 +50,27 @@ class SignUp extends Component<Props, State> {
   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
     const field = event.currentTarget.getAttribute('data-field');
-    const { setState, removeErrorImg } = this;
 
     switch (field) {
       case 'username':
-        setState({ username: value });
-        removeErrorImg(2);
+        this.setState({ username: value });
+        this.removeErrorImg(2);
         break;
       case 'emailOrPhoneNumber':
-        setState({ emailOrPhoneNumber: value });
-        removeErrorImg(0);
+        this.setState({ emailOrPhoneNumber: value });
+        this.removeErrorImg(0);
         break;
       case 'password':
         if (value) {
-          setState({ showBtnInPasswordInput: true, password: value });
+          this.setState({ showBtnInPasswordInput: true, password: value });
         } else {
-          setState({ showBtnInPasswordInput: false });
+          this.setState({ showBtnInPasswordInput: false });
         }
-        removeErrorImg(3);
+        this.removeErrorImg(3);
         break;
       case 'fullName':
-        setState({ fullName: value });
-        removeErrorImg(1);
+        this.setState({ fullName: value });
+        this.removeErrorImg(1);
         break;
       default:
         break;
@@ -112,7 +111,7 @@ class SignUp extends Component<Props, State> {
     return null;
   };
 
-  renderInputFields() {
+  renderInputFields = (): JSX.Element[] => {
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     const placeholders: { [key: string]: string } = {
       emailOrPhoneNumber: 'Mobile number or email',
