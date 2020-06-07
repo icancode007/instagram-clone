@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-// import errorImg from '../../../../public/error.png';
 
 interface State {
   username: string;
@@ -132,7 +131,7 @@ class SignUp extends Component<Props, State> {
           data-field={field}
         />
         {this.renderInputWithError(`input-${idx}`) ? (
-          <span> error </span> //{<img className='error-image' src={errorImg} alt='error' />}
+          <img className='error-image' src={`${process.env.PUBLIC_URL} + /error.png`} alt='error' />
         ) : null}
         {showBtnInPasswordInput && field === 'password' ? (
           <button className='show-hide-btn' type='button'>

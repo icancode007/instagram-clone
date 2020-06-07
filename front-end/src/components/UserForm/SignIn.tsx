@@ -5,7 +5,7 @@ import { RootState } from '../../utils/types';
 
 export interface State {
   error: string;
-  // isSubmitButtonEnable: boolean;
+  isSubmitButtonEnable: boolean;
   isShowingPassword: boolean;
   showBtnInPasswordInput: boolean;
   password: string;
@@ -22,7 +22,7 @@ class SignIn extends Component<Props, State> {
   state = {
     error: '',
     isShowingPassword: false,
-    // isSubmitButtonEnable: false, come back to this when validations are fixed
+    isSubmitButtonEnable: false,
     password: '',
     showBtnInPasswordInput: false,
     username: '',
