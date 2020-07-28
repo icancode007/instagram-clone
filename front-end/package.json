@@ -25,7 +25,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix --ext .ts,.tsx src",
     "eject": "react-scripts eject",
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix"
+    "prebuild": "yarn"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {

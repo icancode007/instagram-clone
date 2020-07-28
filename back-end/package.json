@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "format": "prettier --write 'src/**/*.ts'",
-    "prebuild": "yarn lint && yarn format",
+    "prebuild": "yarn",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",

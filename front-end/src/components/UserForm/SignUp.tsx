@@ -110,6 +110,12 @@ class SignUp extends Component<Props, State> {
     return null;
   };
 
+  hideDisplayPassword = () => {
+    this.setState((state) => {
+      return {isShowingPassword: !state.isShowingPassword}
+    })
+  }
+
   renderInputFields = (): JSX.Element[] => {
     const { isShowingPassword, showBtnInPasswordInput } = this.state;
     const placeholders: { [key: string]: string } = {
@@ -124,7 +130,7 @@ class SignUp extends Component<Props, State> {
         <input
           id={field}
           key={field + idx}
-          type={field === 'password' ? 'password' : 'text'}
+          type={field === 'password' && !isShowingPassword ? 'password': 'text'}
           className='sign-up-input'
           placeholder={placeholders[field]}
           onChange={this.handleFieldChange}
@@ -134,7 +140,7 @@ class SignUp extends Component<Props, State> {
           <img className='error-image' src={`${process.env.PUBLIC_URL} + /error.png`} alt='error' />
         ) : null}
         {showBtnInPasswordInput && field === 'password' ? (
-          <button className='show-hide-btn' type='button'>
+          <button className='show-hide-btn' type='button' onClick={this.hideDisplayPassword}>
             {isShowingPassword ? 'Hide' : 'Show'}
           </button>
         ) : null}

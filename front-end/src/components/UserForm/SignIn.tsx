@@ -65,12 +65,18 @@ class SignIn extends Component<Props, State> {
     if (event.target.value) {
       this.setState({
         password: event.target.value,
-        showBtnInPasswordInput: true,
+          showBtnInPasswordInput: true,
       });
     } else {
       this.setState({ showBtnInPasswordInput: false });
     }
   };
+
+  hideDisplayPassword = () => {
+    this.setState((state) => {
+      return {isShowingPassword: !state.isShowingPassword}
+    })
+  }
 
   render() {
     const {
@@ -120,12 +126,12 @@ class SignIn extends Component<Props, State> {
             <div className='input-container'>
               <input
                 id='password'
-                type='password'
+                type={isShowingPassword ? 'text' : 'password'}
                 placeholder='Password'
                 onChange={handlePasswordChange}
               />
               {showBtnInPasswordInput && (
-                <button type='button' className='show-hide-btn'>
+                <button type='button' className='show-hide-btn' onClick={this.hideDisplayPassword}>
                   {isShowingPassword ? 'Hide' : 'Show'}
                 </button>
               )}

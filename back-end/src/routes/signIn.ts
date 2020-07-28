@@ -30,6 +30,7 @@ router.post(
 
     const queryResponse = await db.query(q, [loginHandle]);
     const retrievedUser = queryResponse.rows[0];
+
     if (!retrievedUser) {
       res.status(401).send({ error: USER_DOES_NOT_EXIST });
     } else if (await bcrypt.compare(password, retrievedUser.password)) {
