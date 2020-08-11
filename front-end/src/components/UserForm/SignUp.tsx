@@ -48,32 +48,17 @@ class SignUp extends Component<Props, State> {
 
   handleFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget;
-    const field = event.currentTarget.getAttribute('data-field');
+    const field = event.currentTarget.getAttribute('data-field') as any;
 
-    switch (field) {
-      case 'username':
-        this.setState({ username: value });
-        this.removeErrorImg(2);
-        break;
-      case 'emailOrPhoneNumber':
-        this.setState({ emailOrPhoneNumber: value });
-        this.removeErrorImg(0);
-        break;
-      case 'password':
-        if (value) {
-          this.setState({ showBtnInPasswordInput: true, password: value });
-        } else {
-          this.setState({ showBtnInPasswordInput: false });
-        }
-        this.removeErrorImg(3);
-        break;
-      case 'fullName':
-        this.setState({ fullName: value });
-        this.removeErrorImg(1);
-        break;
-      default:
-        break;
+    if (field !== 'password') {
+     return this.setState({[field]: value} as Pick<State, keyof State>)
     }
+
+    const setPwd = value
+      ? { showBtnInPasswordInput: true, password: value }
+      : { showBtnInPasswordInput: false } as Pick<State, keyof State>;
+
+    return this.setState(setPwd)
   };
 
   removeErrorImg = (inputPosition: number): void => {

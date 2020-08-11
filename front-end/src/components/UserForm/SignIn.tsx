@@ -37,6 +37,7 @@ class SignIn extends Component<Props, State> {
       isAuthenticated,
       user: { username },
     } = auth;
+
     if (isAuthenticated) {
       history.push(`/${username}`);
     }
